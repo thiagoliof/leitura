@@ -8,5 +8,4 @@ export function fetchCategories () {
 
     return fetch(request)
         .then((res) => res.json())
-        .then(({ categories }) => categories.map(({ cat }) => cat))
 }

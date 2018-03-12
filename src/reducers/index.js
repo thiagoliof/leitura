@@ -1,3 +1,6 @@
+import {
+    LOAD_CATEGORY,
+} from '../actions'
 import { combineReducers } from 'redux';
 
 const initialCategoryState = {
@@ -18,7 +21,15 @@ const initialCategoryState = {
 }
 
 function category (state = initialCategoryState, action){
+    const { categories } = action
+    console.log(categories)
     switch (action.type) {
+        
+        case LOAD_CATEGORY :
+            return {
+                ...state,
+            }
+
         default :
             return state
     }

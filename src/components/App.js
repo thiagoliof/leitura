@@ -15,7 +15,10 @@ class App extends Component {
   // )
 
   componentDidMount() {
-    this.props.loadCategories()
+    const { loadCategories } = this.props
+    fetchCategories().then(dados => {
+      loadCategories(dados.categories)
+    })
   }
 
   render() {
