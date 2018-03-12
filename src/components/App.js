@@ -14,7 +14,7 @@ class App extends Component {
   render() {
 
     const { activeItem } = {}
-    console.log(this.state)
+    console.log(this.props)
 
     return (
       <div>
