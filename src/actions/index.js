@@ -1,4 +1,5 @@
 export const LOAD_CATEGORY = 'LOAD_CATEGORY'
+export const SELECT_MENU = 'SELECT_MENU'
 
 export function loadCategory (categories) {
     return {
@@ -6,3 +7,10 @@ export function loadCategory (categories) {
         categories
     }
 } 
+
+export function selectMenu (itemSelected) {
+    return {
+        type: SELECT_MENU,
+        itemSelected
+    }
+}

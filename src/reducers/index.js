@@ -1,5 +1,6 @@
 import {
     LOAD_CATEGORY,
+    SELECT_MENU,
 } from '../actions'
 import { combineReducers } from 'redux';
 
@@ -16,4 +17,16 @@ function category (state = [], action){
     }
 }
 
-export default combineReducers({category}) 
+function activeMenuItem (state = 'react', action){
+    
+    switch (action.type) {
+        
+        case SELECT_MENU :
+            return action.itemSelected
+
+        default :
+            return state
+    }
+}
+
+export default combineReducers({category, activeMenuItem}) 
