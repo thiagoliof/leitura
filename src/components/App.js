@@ -23,16 +23,18 @@ class App extends Component {
 
   render() {
 
-    const { activeItem } = {}
-    console.log( this.props )
-
+    const  activeItem  = 'redux'
+    const { category } = this.props
+  
     return (
       <div>
-        <Menu pointing secondary>
-          <Menu.Item name='react'   active={activeItem === 'react'}   onClick={this.handleItemClick} />
-          <Menu.Item name='redux'   active={activeItem === 'redux'}   onClick={this.handleItemClick} />
-          <Menu.Item name='udacity' active={activeItem === 'udacity'} onClick={this.handleItemClick} />
-        </Menu>
+        {category.length > 0 && (
+          <Menu pointing secondary>
+            {category.map((cat, index) => (
+                <Menu.Item key={index} name={cat.name}   active={activeItem === cat.name}   onClick={this.handleItemClick} />
+            ))}
+          </Menu>
+        )}
       </div>
     );
   }
