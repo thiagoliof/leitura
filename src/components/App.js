@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Link } from 'react-router-dom'
 import { Menu } from 'semantic-ui-react'
 
 import { connect } from 'react-redux'
 import { loadCategory, selectMenu } from '../actions'
 
 import { fetchCategories } from '../utils/api'
+import { capitalize } from '../utils/helpers'
 
 class App extends Component {
 
@@ -34,10 +35,22 @@ class App extends Component {
           {category.length > 0 && (
             <Menu pointing secondary>
               {category.map((cat, index) => (
-                  <Menu.Item key={index}  name={cat.name}   active={activeMenuItem === cat.name}  onClick={this.handleItemClick} />
+                <Link key={index} to={"/" + (index === 0 ? "" : cat.name)} className={"item"} params={cat.name} >{capitalize(cat.name)}</Link>
               ))}
             </Menu>
           )}
+          <Route path="/" exact render={() => (
+            <div>Todas Postagem</div>
+          )}/>
+          <Route path="/react" exact render={() => (
+            <div>filtro react</div>
+          )}/>
+          <Route path="/redux" exact render={() => (
+            <div>filtro redux</div>
+          )}/>
+          <Route path="/udacity" exact render={() => (
+            <div>filtro udacity</div>
+          )}/>
         </div>
       </BrowserRouter>
     );
