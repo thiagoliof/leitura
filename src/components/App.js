@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter } from 'react-router-dom'
 import { Menu } from 'semantic-ui-react'
 
 import { connect } from 'react-redux'
@@ -28,15 +29,17 @@ class App extends Component {
     const { category, activeMenuItem } = this.props
   
     return (
-      <div>
-        {category.length > 0 && (
-          <Menu pointing secondary>
-            {category.map((cat, index) => (
-                <Menu.Item key={index}  name={cat.name}   active={activeMenuItem === cat.name}  onClick={this.handleItemClick} />
-            ))}
-          </Menu>
-        )}
-      </div>
+      <BrowserRouter>
+        <div>
+          {category.length > 0 && (
+            <Menu pointing secondary>
+              {category.map((cat, index) => (
+                  <Menu.Item key={index}  name={cat.name}   active={activeMenuItem === cat.name}  onClick={this.handleItemClick} />
+              ))}
+            </Menu>
+          )}
+        </div>
+      </BrowserRouter>
     );
   }
 }
