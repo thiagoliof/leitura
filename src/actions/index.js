@@ -6,11 +6,4 @@ export function loadCategory (categories) {
         type: LOAD_CATEGORY,
         categories
     }
-} 
-
-export function selectMenu (itemSelected) {
-    return {
-        type: SELECT_MENU,
-        itemSelected
-    }
 }
