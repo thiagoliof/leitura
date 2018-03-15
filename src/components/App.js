@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom'
-import { Menu, Button, Header, Table, Rating } from 'semantic-ui-react'
+import { Menu, Button } from 'semantic-ui-react'
 
 import { connect } from 'react-redux'
 import { loadCategory } from '../actions'
 
 import { fetchCategories } from '../utils/api'
 import { capitalize } from '../utils/helpers'
+
+import ListPost from './ListPost'
 
 class App extends Component {
 
@@ -33,65 +35,8 @@ class App extends Component {
           )}
           <Route path="/" exact render={() => (
             <div>
-            <Button circular icon='add' color='blue' floated='right'/>
-            {/**/}
-                  <br/>
-                  <br/>
-                  <Table celled padded>
-                    <Table.Header>
-                      <Table.Row>
-                        <Table.HeaderCell singleLine>Título</Table.HeaderCell>
-                        <Table.HeaderCell>Autor</Table.HeaderCell>
-                        <Table.HeaderCell singleLine>Número de comentários</Table.HeaderCell>
-                        <Table.HeaderCell singleLine>Pontuação atual</Table.HeaderCell>
-                        <Table.HeaderCell>Votar</Table.HeaderCell>
-                        <Table.HeaderCell>Ordernação</Table.HeaderCell>
-                      </Table.Row>
-                    </Table.Header>
-
-                    <Table.Body>
-                      <Table.Row>
-                        <Table.Cell>
-                          <Header as='h2' textAlign='center'>A</Header>
-                        </Table.Cell>
-                        <Table.Cell singleLine>Power Output</Table.Cell>
-                        <Table.Cell>
-                          <Rating icon='star' defaultRating={3} maxRating={3} />
-                        </Table.Cell>
-                        <Table.Cell textAlign='right'>
-                            80% <br />
-                          <a href='#'>18 studies</a>
-                        </Table.Cell>
-                        <Table.Cell>
-                            votar
-                        </Table.Cell>
-                        <Table.Cell>
-                            x
-                        </Table.Cell>
-                      </Table.Row>
-                      <Table.Row>
-                        <Table.Cell>
-                          <Header as='h2' textAlign='center'>A</Header>
-                        </Table.Cell>
-                        <Table.Cell singleLine>Weight</Table.Cell>
-                        <Table.Cell>
-                          <Rating icon='star' defaultRating={3} maxRating={3} />
-                        </Table.Cell>
-                        <Table.Cell textAlign='right'>
-                            100% <br />
-                          <a href='#'>65 studies</a>
-                        </Table.Cell>
-                        <Table.Cell>
-                            xxx
-                        </Table.Cell>
-                        <Table.Cell>
-                            x
-                        </Table.Cell>
-                      </Table.Row>
-                    </Table.Body>
-                  </Table>
-
-            {/**/}
+              <Button circular icon='add' color='blue' floated='right'/>
+              <ListPost />
             </div>
           )}/>
           <Route path="/react" exact render={() => (

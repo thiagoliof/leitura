@@ -1,6 +1,6 @@
 import {
     LOAD_CATEGORY,
-    SELECT_MENU,
+    LOAD_POST,
 } from '../actions'
 import { combineReducers } from 'redux';
 
@@ -17,16 +17,17 @@ function category (state = [], action){
     }
 }
 
-function activeMenuItem (state = 'react', action){
+function post (state = [], action){
     
     switch (action.type) {
         
-        case SELECT_MENU :
-            return action.itemSelected
+        case LOAD_POST :
+            return action.posts
 
         default :
             return state
     }
 }
 
-export default combineReducers({category, activeMenuItem}) 
+
+export default combineReducers({category, post}) 
