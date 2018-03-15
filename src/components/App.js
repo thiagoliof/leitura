@@ -39,14 +39,8 @@ class App extends Component {
               <ListPost />
             </div>
           )}/>
-          <Route path="/react" exact render={() => (
-            <div>filtro react</div>
-          )}/>
-          <Route path="/redux" exact render={() => (
-            <div>filtro redux</div>
-          )}/>
-          <Route path="/udacity" exact render={() => (
-            <div>filtro udacity</div>
+          <Route path="/:category" exact render={() => (
+            <div>filtro :category</div>
           )}/>
         </div>
       </BrowserRouter>
