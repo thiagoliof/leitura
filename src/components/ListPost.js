@@ -1,18 +1,31 @@
 import React, { Component } from 'react';
-import { Header, Table, Rating } from 'semantic-ui-react'
-
+import { Header, Table, Rating, Button } from 'semantic-ui-react'
+import { fetchPosts } from '../utils/api'
 import { connect } from 'react-redux'
 import { loadPosts } from '../actions'
 
 class ListPost extends Component {
 
+    VoteUp = (id) => {
+        alert(`VoteUp - ${id}`)
+    }
+
+    VoteDown = (id) => {
+        alert(`VoteDown - ${id}`)
+    }
+
+    componentDidMount() {
+        const { loadPosts } = this.props
+        fetchPosts().then(dados => {
+          loadPosts(dados)
+        })
+    }
+
     render() {
-
         const { post } = this.props
-        console.log(post)
-
         return (
             <div>
+                <div className={"verticalSpace"}></div>
                 <Table celled padded>
                     <Table.Header>
                         <Table.Row>
@@ -21,30 +34,25 @@ class ListPost extends Component {
                             <Table.HeaderCell singleLine>Número de comentários</Table.HeaderCell>
                             <Table.HeaderCell singleLine>Pontuação atual</Table.HeaderCell>
                             <Table.HeaderCell singleLine>Votar</Table.HeaderCell>
-                            <Table.HeaderCell singleLine><a href='#'>18 studies</a></Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
                             
                         {post.map((_post, index) => (
-                            
                             <Table.Row key={index}>
                                 <Table.Cell>
                                     {_post.title}
                                 </Table.Cell>
                                 <Table.Cell singleLine>{_post.author}</Table.Cell>
                                 <Table.Cell>numero coments</Table.Cell>
-                                <Table.Cell textAlign='right'>pontuação% 
-                                    <br /><a href='#'>18 studies</a>
+                                <Table.Cell textAlign='right'>
+                                    {_post.voteScore} Pontos
                                 </Table.Cell>
                                 <Table.Cell>
-                                    votar
-                                </Table.Cell>
-                                <Table.Cell>
-                                    ordenação
+                                    <Button circular icon='thumbs outline up' onClick={() => this.VoteUp(_post.id)}></Button>
+                                    <Button circular icon='thumbs outline down' onClick={() => this.VoteDown(_post.id)}></Button>
                                 </Table.Cell>
                             </Table.Row>
-
                         ))}
 
                     </Table.Body>

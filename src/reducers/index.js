@@ -43,7 +43,7 @@ const initalPosts =
     }
 ]
 
-function post (state = initalPosts, action){
+function post (state = [], action){
     
     switch (action.type) {
         

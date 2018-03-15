@@ -5,3 +5,7 @@
 .ui[class*="right floated"].button, .ui[class*="right floated"].buttons {
   margin-right: 15px;
 }
+
+.verticalSpace{
+  height: 35px;
+}
