@@ -15,6 +15,10 @@ class ListPost extends Component {
     }
 
     componentDidMount() {
+        this.getPosts();
+    }
+
+    getPosts = () => {
         const { loadPosts } = this.props
         fetchPosts().then(dados => {
           loadPosts(dados)
