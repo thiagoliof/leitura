@@ -36,3 +36,18 @@ export function votePost (id, valueVote) {
         })
     }).then((res) => res.json())
 }
+
+
+export function deletePost (id) {
+
+    return fetch(`http://localhost:3001/posts/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'whatever',
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            deleted: true,
+        })
+    }).then((res) => res.json())
+}

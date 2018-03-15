@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { Header, Table, Rating, Button } from 'semantic-ui-react'
-import { fetchPosts, votePost } from '../utils/api'
+import { fetchPosts, votePost, deletePost } from '../utils/api'
 import { connect } from 'react-redux'
 import { loadPosts } from '../actions'
 
 class ListPost extends Component {
 
-    VoteUp = (id) => {
+    voteUp = (id) => {
         votePost(id, "upVote").then(dados => {
             this.getPosts();
         })
     }
 
-    VoteDown = (id) => {
+    voteDown = (id) => {
         votePost(id, "downVote").then(dados => {
             this.getPosts();
         })
@@ -29,42 +29,66 @@ class ListPost extends Component {
         })
     }
 
+    changePost = (id) =>{
+        alert(`change - ${id}`)
+    }
+
+    deletePost = (id) =>{
+        deletePost(id).then(dados => {
+            this.getPosts();
+        })
+    }
+
     render() {
         const { post } = this.props
+        console.log(post)
         return (
             <div>
                 <div className={"verticalSpace"}></div>
-                <Table celled padded>
-                    <Table.Header>
-                        <Table.Row>
-                            <Table.HeaderCell singleLine>Título</Table.HeaderCell>
-                            <Table.HeaderCell singleLine>Autor</Table.HeaderCell>
-                            <Table.HeaderCell singleLine>Número de comentários</Table.HeaderCell>
-                            <Table.HeaderCell singleLine>Pontuação atual</Table.HeaderCell>
-                            <Table.HeaderCell singleLine>Votar</Table.HeaderCell>
-                        </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                            
-                        {post.map((_post, index) => (
-                            <Table.Row key={index}>
-                                <Table.Cell>
-                                    {_post.title}
-                                </Table.Cell>
-                                <Table.Cell singleLine>{_post.author}</Table.Cell>
-                                <Table.Cell>numero coments</Table.Cell>
-                                <Table.Cell textAlign='right'>
-                                    {_post.voteScore} Pontos
-                                </Table.Cell>
-                                <Table.Cell>
-                                    <Button circular icon='thumbs outline up' onClick={() => this.VoteUp(_post.id)}></Button>
-                                    <Button circular icon='thumbs outline down' onClick={() => this.VoteDown(_post.id)}></Button>
-                                </Table.Cell>
-                            </Table.Row>
-                        ))}
+                
+                {post.length > 0 && (
 
-                    </Table.Body>
-                </Table>
+                    <Table celled padded>
+                        <Table.Header>
+                            <Table.Row>
+                                <Table.HeaderCell singleLine>Título</Table.HeaderCell>
+                                <Table.HeaderCell singleLine>Autor</Table.HeaderCell>
+                                <Table.HeaderCell singleLine>Número de comentários</Table.HeaderCell>
+                                <Table.HeaderCell singleLine>Pontuação atual</Table.HeaderCell>
+                                <Table.HeaderCell singleLine>Votar</Table.HeaderCell>
+                                <Table.HeaderCell singleLine>Ações</Table.HeaderCell>
+                                <Table.HeaderCell singleLine>deleted</Table.HeaderCell>
+                            </Table.Row>
+                        </Table.Header>
+                        <Table.Body>
+                                
+                            {post.map((_post, index) => (
+                                <Table.Row key={index}>
+                                    <Table.Cell>
+                                        {_post.title}
+                                    </Table.Cell>
+                                    <Table.Cell singleLine>{_post.author}</Table.Cell>
+                                    <Table.Cell>numero coments</Table.Cell>
+                                    <Table.Cell textAlign='right'>
+                                        {_post.voteScore} Ponto(s)
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                        <Button circular icon='thumbs outline up' onClick={() => this.voteUp(_post.id)}></Button>
+                                        <Button circular icon='thumbs outline down' onClick={() => this.voteDown(_post.id)}></Button>
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                        <Button circular icon='setting' onClick={() => this.changePost(_post.id)}></Button>
+                                        <Button circular icon='trash' onClick={() => this.deletePost(_post.id)}></Button>
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                        {`${_post.deleted}`}
+                                    </Table.Cell>
+                                </Table.Row>
+                            ))}
+
+                        </Table.Body>
+                    </Table>
+                )}
             </div>
         )
     }
