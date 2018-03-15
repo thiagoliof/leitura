@@ -23,7 +23,7 @@ function post (state = [], action){
         
         case LOAD_POST :
             return action.posts
-
+        
         default :
             return state
     }

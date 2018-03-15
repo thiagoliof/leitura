@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import { Header, Table, Rating, Button } from 'semantic-ui-react'
-import { fetchPosts } from '../utils/api'
+import { fetchPosts, votePost } from '../utils/api'
 import { connect } from 'react-redux'
 import { loadPosts } from '../actions'
 
 class ListPost extends Component {
 
     VoteUp = (id) => {
-        alert(`VoteUp - ${id}`)
+        votePost(id, "upVote").then(dados => {
+            this.getPosts();
+        })
     }
 
     VoteDown = (id) => {
-        alert(`VoteDown - ${id}`)
+        votePost(id, "downVote").then(dados => {
+            this.getPosts();
+        })
     }
 
     componentDidMount() {

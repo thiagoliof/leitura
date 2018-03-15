@@ -22,3 +22,17 @@ export function fetchPosts () {
         .then((res) => res.json())
 }
 
+
+export function votePost (id, valueVote) {
+
+    return fetch(`http://localhost:3001/posts/${id}`, {
+        method: 'POST',
+        headers: {
+            'Authorization': 'whatever',
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            option: valueVote,
+        })
+    }).then((res) => res.json())
+}
