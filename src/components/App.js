@@ -39,8 +39,11 @@ class App extends Component {
               <ListPost />
             </div>
           )}/>
-          <Route path="/:category" exact render={() => (
-            <div>filtro :category</div>
+          <Route path="/:category" exact render={({ match }) => (
+            <div>
+              <Button circular icon='add' color='blue' floated='right'/>
+              <ListPost filter={ match } />
+            </div>
           )}/>
         </div>
       </BrowserRouter>

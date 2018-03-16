@@ -41,7 +41,6 @@ class ListPost extends Component {
 
     render() {
         const { post } = this.props
-        console.log(post)
         return (
             <div>
                 <div className={"verticalSpace"}></div>
@@ -54,10 +53,11 @@ class ListPost extends Component {
                                 <Table.HeaderCell singleLine>Título</Table.HeaderCell>
                                 <Table.HeaderCell singleLine>Autor</Table.HeaderCell>
                                 <Table.HeaderCell singleLine>Número de comentários</Table.HeaderCell>
-                                <Table.HeaderCell singleLine>Pontuação atual</Table.HeaderCell>
+                                <Table.HeaderCell singleLine>
+                                    Pontuação atual 
+                                </Table.HeaderCell>
                                 <Table.HeaderCell singleLine>Votar</Table.HeaderCell>
                                 <Table.HeaderCell singleLine>Ações</Table.HeaderCell>
-                                <Table.HeaderCell singleLine>deleted</Table.HeaderCell>
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
@@ -80,9 +80,6 @@ class ListPost extends Component {
                                         <Button circular icon='setting' onClick={() => this.changePost(_post.id)}></Button>
                                         <Button circular icon='trash' onClick={() => this.deletePost(_post.id)}></Button>
                                     </Table.Cell>
-                                    <Table.Cell>
-                                        {`${_post.deleted}`}
-                                    </Table.Cell>
                                 </Table.Row>
                             ))}
 
@@ -94,14 +91,18 @@ class ListPost extends Component {
     }
 }
 
-function mapStateToProps ({ post }) {
-    return { post };
-  }
+function mapStateToProps ({ post }, props) {
+    var _post = post;
+    if (props.filter){
+        _post = post.filter(e => e.category === props.filter.params.category)
+    }
+    return { post:_post };
+}
   
-  function mapDispatchToProps (dispatch) {
+function mapDispatchToProps (dispatch) {
     return {
       loadPosts: (data) => dispatch(loadPosts(data)),
     }
-  }
+}
   
   export default connect(mapStateToProps, mapDispatchToProps)(ListPost)
