@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Header, Table, Rating, Button } from 'semantic-ui-react'
 import { fetchPosts, votePost, deletePost } from '../utils/api'
 import { connect } from 'react-redux'
-import { loadPosts } from '../actions'
+import { loadPosts, orderPosts } from '../actions'
 
 class ListPost extends Component {
 
@@ -39,6 +39,16 @@ class ListPost extends Component {
         })
     }
 
+    orderUp = _ =>{
+        const { setOrderPosts } = this.props
+        setOrderPosts({order:`orderUp`})
+    }
+
+    orderDown = _ =>{
+        const { setOrderPosts } = this.props
+        setOrderPosts({order:`orderDown`})
+    }
+
     render() {
         const { post } = this.props
         return (
@@ -55,6 +65,8 @@ class ListPost extends Component {
                                 <Table.HeaderCell singleLine>Número de comentários</Table.HeaderCell>
                                 <Table.HeaderCell singleLine>
                                     Pontuação atual 
+                                        <i aria-hidden="true" className={"triangle up big icon"} onClick={() => this.orderUp()}></i>
+                                        <i aria-hidden="true" className={"triangle down big icon"} onClick={() => this.orderDown()}></i>
                                 </Table.HeaderCell>
                                 <Table.HeaderCell singleLine>Votar</Table.HeaderCell>
                                 <Table.HeaderCell singleLine>Ações</Table.HeaderCell>
@@ -91,17 +103,36 @@ class ListPost extends Component {
     }
 }
 
-function mapStateToProps ({ post }, props) {
+function mapStateToProps ({ post, orderPost }, props) {
     var _post = post;
+    
     if (props.filter){
         _post = post.filter(e => e.category === props.filter.params.category)
+        if (Object.keys(orderPost).length > 0) {
+            if(orderPost.order === 'orderUp'){
+                _post = _post.slice().sort(function(a,b) {return (a.voteScore > b.voteScore) ? 1 : ((b.voteScore > a.voteScore) ? -1 : 0);} ); 
+            }
+            else if(orderPost.order === 'orderDown'){
+                _post = _post.slice().sort(function(a,b) {return (a.voteScore > b.voteScore) ? 1 : ((b.voteScore > a.voteScore) ? -1 : 0);} ).reverse();
+            }
+        }
+    } else {
+        // tentar usar o slice + order
+        if(orderPost.order === 'orderUp'){
+            _post = post.slice().sort(function(a,b) {return (a.voteScore > b.voteScore) ? 1 : ((b.voteScore > a.voteScore) ? -1 : 0);} ); 
+        }
+        else if(orderPost.order === 'orderDown'){
+            _post = post.slice().sort(function(a,b) {return (a.voteScore > b.voteScore) ? 1 : ((b.voteScore > a.voteScore) ? -1 : 0);} ).reverse();
+        }
     }
-    return { post:_post };
+
+    return { post:_post, orderPost:orderPost };
 }
   
 function mapDispatchToProps (dispatch) {
     return {
       loadPosts: (data) => dispatch(loadPosts(data)),
+      setOrderPosts: (data) => dispatch(orderPosts(data)),
     }
 }
   
