@@ -37,6 +37,24 @@ export function votePost (id, valueVote) {
     }).then((res) => res.json())
 }
 
+export function addPost (id, timestamp, title, body, author, category) {
+
+    return fetch(`http://localhost:3001/posts/`, {
+        method: 'POST',
+        headers: {
+            'Authorization': 'whatever',
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            id:id,
+            timestamp:timestamp,
+            title: title,
+            body: body,
+            author: author,
+            category: category
+        })
+    }).then((res) => res.json())
+}
 
 export function deletePost (id) {
 

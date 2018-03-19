@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
 import { Table, Button, Modal, Form, Dropdown } from 'semantic-ui-react'
-import { fetchPosts, votePost, deletePost } from '../utils/api'
+import { fetchPosts, votePost, deletePost, addPost } from '../utils/api'
 import { connect } from 'react-redux'
 import { loadPosts, orderPosts } from '../actions'
 
+import uuidv1 from 'uuid/v1';
+
+
 class ListPost extends Component {
 
-    state = { open: false }
+    state = { 
+        open: false,
+        // form
+        titulo: '', 
+        corpo: '', 
+        autor: '', 
+    }
+    
 
     voteUp = (id) => {
         votePost(id, "upVote").then(dados => {
@@ -60,18 +70,21 @@ class ListPost extends Component {
     }
 
     addPost = () => {
-        //alert('added')
-        this.setState({ open: false })
+        const {titulo, corpo, autor}  = this.state
+        const categoria = "redux"
+        const id = uuidv1();
+        addPost(id, Date.now, titulo, corpo, autor, categoria).then(dados => {
+            this.getPosts();
+            this.setState({ open: false })
+        })
     }
+    handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
     render() {
         const { post } = this.props
         const { open, size } = this.state
-        const categoryOptions = [
-            { value: 'react',   text: 'React'},
-            { value: 'redux',   text: 'Redux'},
-            { value: 'udacity', text: 'Udacity'},
-        ]
+        const { titulo, corpo, autor } = this.state
+
         return (
             <div>
                 <Button circular icon='add' color='blue' floated='right' onClick={() => this.showModal('small')}/>
@@ -125,26 +138,25 @@ class ListPost extends Component {
                             Adicionar Post
                         </Modal.Header>
                         <Modal.Content>
-                            <p>
+                            <div>
                                 <Form>
                                     <Form.Field>
                                         <label>Título</label>
-                                        <input placeholder='Título' />
+                                        <Form.Input placeholder='Título' name='titulo' value={titulo} onChange={this.handleChange} />
                                     </Form.Field>
                                     <Form.Field>
                                         <label>Corpo</label>
-                                        <input placeholder='Corpo' />
+                                        <Form.Input placeholder='Corpo' name='corpo' value={corpo} onChange={this.handleChange} />
                                     </Form.Field>
                                     <Form.Field>
                                         <label>Autor</label>
-                                        <input placeholder='Autor' />
+                                        <Form.Input placeholder='Autor' name='autor' value={autor} onChange={this.handleChange}  />
                                     </Form.Field>
                                     <Form.Field>
-                                        <label>Categoria</label>
-                                        <Dropdown placeholder='Selecione a Categoria' fluid selection options={categoryOptions} />
+                                        <label>categoria completar</label>
                                     </Form.Field>
                                 </Form>
-                            </p>
+                            </div>
                         </Modal.Content>
                         <Modal.Actions>
                             <Button negative onClick={() => this.closeModal()}>
