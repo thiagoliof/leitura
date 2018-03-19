@@ -9,3 +9,8 @@
 .verticalSpace{
   height: 35px;
 }
+
+.visible.transition {
+  display:grid !important;
+  visibility: visible!important;
+}

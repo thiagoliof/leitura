@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Header, Table, Rating, Button } from 'semantic-ui-react'
+import { Table, Button, Modal } from 'semantic-ui-react'
 import { fetchPosts, votePost, deletePost } from '../utils/api'
 import { connect } from 'react-redux'
 import { loadPosts, orderPosts } from '../actions'
 
 class ListPost extends Component {
+
+    state = { open: false }
 
     voteUp = (id) => {
         votePost(id, "upVote").then(dados => {
@@ -49,14 +51,27 @@ class ListPost extends Component {
         setOrderPosts({order:`orderDown`})
     }
 
+    showModal = size => {
+        //alert('entrei')
+        this.setState({ size, open: true })
+    }
+    closeModal = () => {
+        this.setState({ open: false })
+    }
+
+    addPost = () => {
+        alert('added')
+        this.setState({ open: false })
+    }
+
     render() {
         const { post } = this.props
+        const { open, size } = this.state
         return (
             <div>
+                <Button circular icon='add' color='blue' floated='right' onClick={() => this.showModal('small')}/>
                 <div className={"verticalSpace"}></div>
-                
                 {post.length > 0 && (
-
                     <Table celled padded>
                         <Table.Header>
                             <Table.Row>
@@ -98,6 +113,26 @@ class ListPost extends Component {
                         </Table.Body>
                     </Table>
                 )}
+
+                <div>
+                    <Modal size={size} open={open} onClose={this.close}>
+                        <Modal.Header>
+                            Adicionar Post
+                        </Modal.Header>
+                        <Modal.Content>
+                            <p>Are you sure you want to delete your account</p>
+                        </Modal.Content>
+                        <Modal.Actions>
+                            <Button negative onClick={() => this.closeModal()}>
+                                Cancelar
+                            </Button>
+                            <Button positive onClick={() => this.addPost()}>
+                                Adicionar
+                            </Button>
+                        </Modal.Actions>
+                    </Modal>
+                </div>
+
             </div>
         )
     }
@@ -133,4 +168,4 @@ function mapDispatchToProps (dispatch) {
     }
 }
   
-  export default connect(mapStateToProps, mapDispatchToProps)(ListPost)
+export default connect(mapStateToProps, mapDispatchToProps)(ListPost)
