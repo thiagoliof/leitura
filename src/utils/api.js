@@ -56,6 +56,23 @@ export function addPost (id, timestamp, title, body, author, category) {
     }).then((res) => res.json())
 }
 
+export function editPost (id, timestamp, title, body, author, category) {
+
+    return fetch(`http://localhost:3001/posts/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': 'whatever',
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            title: title,
+            body: body,
+            author: author,
+            category: category
+        })
+    }).then((res) => res.json())
+}
+
 export function deletePost (id) {
 
     return fetch(`http://localhost:3001/posts/${id}`, {

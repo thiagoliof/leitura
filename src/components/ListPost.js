@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Button, Modal, Form, Dropdown } from 'semantic-ui-react'
-import { fetchPosts, votePost, deletePost, addPost } from '../utils/api'
+import { fetchPosts, votePost, deletePost, addPost, editPost } from '../utils/api'
 import { connect } from 'react-redux'
 import { loadPosts, orderPosts } from '../actions'
 
@@ -92,7 +92,11 @@ class ListPost extends Component {
     }
 
     editPost = () => {
-        alert('entrei')
+        const {id, titulo, corpo, autor, categoria}  = this.state
+        editPost(id, Date.now, titulo, corpo, autor, categoria).then(dados => {
+            this.getPosts();
+            this.clearState();
+        })
     }
 
     handleChange = (e, { name, value }) => {
