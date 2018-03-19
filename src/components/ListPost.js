@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Modal } from 'semantic-ui-react'
+import { Table, Button, Modal, Form, Select } from 'semantic-ui-react'
 import { fetchPosts, votePost, deletePost } from '../utils/api'
 import { connect } from 'react-redux'
 import { loadPosts, orderPosts } from '../actions'
@@ -60,13 +60,19 @@ class ListPost extends Component {
     }
 
     addPost = () => {
-        alert('added')
+        //alert('added')
         this.setState({ open: false })
+
+        // title
+        // body
+        // author
+        // category
     }
 
     render() {
         const { post } = this.props
         const { open, size } = this.state
+        const countryOptions = [{ key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' }]
         return (
             <div>
                 <Button circular icon='add' color='blue' floated='right' onClick={() => this.showModal('small')}/>
@@ -114,13 +120,32 @@ class ListPost extends Component {
                     </Table>
                 )}
 
-                <div>
+                
                     <Modal size={size} open={open} onClose={this.close}>
                         <Modal.Header>
                             Adicionar Post
                         </Modal.Header>
                         <Modal.Content>
-                            <p>Are you sure you want to delete your account</p>
+                            <p>
+                                <Form>
+                                    <Form.Field>
+                                        <label>Título</label>
+                                        <input placeholder='Título' />
+                                    </Form.Field>
+                                    <Form.Field>
+                                        <label>Corpo</label>
+                                        <input placeholder='Corpo' />
+                                    </Form.Field>
+                                    <Form.Field>
+                                        <label>Autor</label>
+                                        <input placeholder='Autor' />
+                                    </Form.Field>
+                                    <Form.Field>
+                                        <label>Categoria</label>
+                                        <Select placeholder='Select your country' options={countryOptions} />
+                                    </Form.Field>
+                                </Form>
+                            </p>
                         </Modal.Content>
                         <Modal.Actions>
                             <Button negative onClick={() => this.closeModal()}>
@@ -131,7 +156,7 @@ class ListPost extends Component {
                             </Button>
                         </Modal.Actions>
                     </Modal>
-                </div>
+                
 
             </div>
         )
