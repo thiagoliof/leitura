@@ -75,7 +75,13 @@ class ListPost extends Component {
         const id = uuidv1();
         addPost(id, Date.now, titulo, corpo, autor, categoria).then(dados => {
             this.getPosts();
-            this.setState({ open: false,  titulo: '', corpo: '', autor: '', categoria: ''})
+            this.setState({ 
+                            open: false,  
+                            titulo: '', 
+                            corpo: '', 
+                            autor: '', 
+                            categoria: ''
+                        })
 
         })
     }
