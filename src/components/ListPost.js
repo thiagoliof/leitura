@@ -85,6 +85,12 @@ class ListPost extends Component {
         const { open, size } = this.state
         const { titulo, corpo, autor } = this.state
 
+        const categoryOptions = [
+            { value: 'react',   text: 'React'},
+            { value: 'redux',   text: 'Redux'},
+            { value: 'udacity', text: 'Udacity'},
+        ]
+
         return (
             <div>
                 <Button circular icon='add' color='blue' floated='right' onClick={() => this.showModal('small')}/>
@@ -154,6 +160,7 @@ class ListPost extends Component {
                                     </Form.Field>
                                     <Form.Field>
                                         <label>categoria completar</label>
+                                        <Dropdown placeholder='Selecione a Categoria' fluid selection options={categoryOptions} />
                                     </Form.Field>
                                 </Form>
                             </div>
