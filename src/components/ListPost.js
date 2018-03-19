@@ -42,8 +42,9 @@ class ListPost extends Component {
         })
     }
 
-    changePost = (id) =>{
-        alert(`change - ${id}`)
+    changePost = (post) =>{
+        const {id, author, body, category, title} = post
+        this.setState({ id:id, autor:author, corpo:body, categoria:category, titulo:title, open: true })
     }
 
     deletePost = (id) =>{
@@ -67,7 +68,18 @@ class ListPost extends Component {
         this.setState({ size, open: true })
     }
     closeModal = () => {
-        this.setState({ open: false })
+        this.clearState();
+    }
+
+    clearState = () => {
+        this.setState({ 
+            open: false,  
+            titulo: '', 
+            corpo: '', 
+            autor: '', 
+            categoria: '',
+            id: ''
+        })
     }
 
     addPost = () => {
@@ -75,16 +87,14 @@ class ListPost extends Component {
         const id = uuidv1();
         addPost(id, Date.now, titulo, corpo, autor, categoria).then(dados => {
             this.getPosts();
-            this.setState({ 
-                            open: false,  
-                            titulo: '', 
-                            corpo: '', 
-                            autor: '', 
-                            categoria: ''
-                        })
-
+            this.clearState();
         })
     }
+
+    editPost = () => {
+        alert('entrei')
+    }
+
     handleChange = (e, { name, value }) => {
         this.setState({ [name]: value })
     }
@@ -121,7 +131,6 @@ class ListPost extends Component {
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
-                                
                             {post.map((_post, index) => (
                                 <Table.Row key={index}>
                                     <Table.Cell>
@@ -137,17 +146,14 @@ class ListPost extends Component {
                                         <Button circular icon='thumbs outline down' onClick={() => this.voteDown(_post.id)}></Button>
                                     </Table.Cell>
                                     <Table.Cell>
-                                        <Button circular icon='setting' onClick={() => this.changePost(_post.id)}></Button>
+                                        <Button circular icon='setting' onClick={() => this.changePost(_post)}></Button>
                                         <Button circular icon='trash' onClick={() => this.deletePost(_post.id)}></Button>
                                     </Table.Cell>
                                 </Table.Row>
                             ))}
-
                         </Table.Body>
                     </Table>
                 )}
-
-                
                     <Modal size={size} open={open} onClose={this.close}>
                         <Modal.Header>
                             Adicionar Post
@@ -178,13 +184,11 @@ class ListPost extends Component {
                             <Button negative onClick={() => this.closeModal()}>
                                 Cancelar
                             </Button>
-                            <Button positive onClick={() => this.addPost()}>
-                                Adicionar
+                            <Button positive onClick={() => this.state.id? this.editPost() :this.addPost()}>
+                                {this.state.id? 'Alterar' :  'Adicionar'}
                             </Button>
                         </Modal.Actions>
                     </Modal>
-                
-
             </div>
         )
     }
