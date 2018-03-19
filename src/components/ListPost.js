@@ -105,7 +105,6 @@ class ListPost extends Component {
 
 function mapStateToProps ({ post, orderPost }, props) {
     var _post = post;
-    
     if (props.filter){
         _post = post.filter(e => e.category === props.filter.params.category)
         if (Object.keys(orderPost).length > 0) {
@@ -117,7 +116,6 @@ function mapStateToProps ({ post, orderPost }, props) {
             }
         }
     } else {
-        // tentar usar o slice + order
         if(orderPost.order === 'orderUp'){
             _post = post.slice().sort(function(a,b) {return (a.voteScore > b.voteScore) ? 1 : ((b.voteScore > a.voteScore) ? -1 : 0);} ); 
         }
@@ -125,7 +123,6 @@ function mapStateToProps ({ post, orderPost }, props) {
             _post = post.slice().sort(function(a,b) {return (a.voteScore > b.voteScore) ? 1 : ((b.voteScore > a.voteScore) ? -1 : 0);} ).reverse();
         }
     }
-
     return { post:_post, orderPost:orderPost };
 }
   
