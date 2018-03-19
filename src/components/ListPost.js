@@ -67,7 +67,7 @@ class ListPost extends Component {
     render() {
         const { post } = this.props
         const { open, size } = this.state
-        const categoriaOptions = [
+        const categoryOptions = [
             { value: 'react',   text: 'React'},
             { value: 'redux',   text: 'Redux'},
             { value: 'udacity', text: 'Udacity'},
@@ -141,7 +141,7 @@ class ListPost extends Component {
                                     </Form.Field>
                                     <Form.Field>
                                         <label>Categoria</label>
-                                        <Dropdown placeholder='Selecione a Categoria' fluid selection options={categoriaOptions} />
+                                        <Dropdown placeholder='Selecione a Categoria' fluid selection options={categoryOptions} />
                                     </Form.Field>
                                 </Form>
                             </p>
