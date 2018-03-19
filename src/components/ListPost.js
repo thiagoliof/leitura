@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Modal, Form, Select } from 'semantic-ui-react'
+import { Table, Button, Modal, Form, Dropdown } from 'semantic-ui-react'
 import { fetchPosts, votePost, deletePost } from '../utils/api'
 import { connect } from 'react-redux'
 import { loadPosts, orderPosts } from '../actions'
@@ -62,17 +62,16 @@ class ListPost extends Component {
     addPost = () => {
         //alert('added')
         this.setState({ open: false })
-
-        // title
-        // body
-        // author
-        // category
     }
 
     render() {
         const { post } = this.props
         const { open, size } = this.state
-        const countryOptions = [{ key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' }]
+        const categoriaOptions = [
+            { value: 'react',   text: 'React'},
+            { value: 'redux',   text: 'Redux'},
+            { value: 'udacity', text: 'Udacity'},
+        ]
         return (
             <div>
                 <Button circular icon='add' color='blue' floated='right' onClick={() => this.showModal('small')}/>
@@ -142,7 +141,7 @@ class ListPost extends Component {
                                     </Form.Field>
                                     <Form.Field>
                                         <label>Categoria</label>
-                                        <Select placeholder='Select your country' options={countryOptions} />
+                                        <Dropdown placeholder='Selecione a Categoria' fluid selection options={categoriaOptions} />
                                     </Form.Field>
                                 </Form>
                             </p>
