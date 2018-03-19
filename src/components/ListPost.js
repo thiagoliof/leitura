@@ -15,6 +15,7 @@ class ListPost extends Component {
         titulo: '', 
         corpo: '', 
         autor: '', 
+        categoria: '', 
     }
     
 
@@ -70,20 +71,22 @@ class ListPost extends Component {
     }
 
     addPost = () => {
-        const {titulo, corpo, autor}  = this.state
-        const categoria = "redux"
+        const {titulo, corpo, autor, categoria}  = this.state
         const id = uuidv1();
         addPost(id, Date.now, titulo, corpo, autor, categoria).then(dados => {
             this.getPosts();
-            this.setState({ open: false })
+            this.setState({ open: false,  titulo: '', corpo: '', autor: '', categoria: ''})
+
         })
     }
-    handleChange = (e, { name, value }) => this.setState({ [name]: value })
+    handleChange = (e, { name, value }) => {
+        this.setState({ [name]: value })
+    }
 
     render() {
         const { post } = this.props
         const { open, size } = this.state
-        const { titulo, corpo, autor } = this.state
+        const { titulo, corpo, autor, categoria } = this.state
 
         const categoryOptions = [
             { value: 'react',   text: 'React'},
@@ -160,7 +163,7 @@ class ListPost extends Component {
                                     </Form.Field>
                                     <Form.Field>
                                         <label>categoria completar</label>
-                                        <Dropdown placeholder='Selecione a Categoria' fluid selection options={categoryOptions} />
+                                        <Dropdown placeholder='Selecione a Categoria' fluid selection options={categoryOptions} name='categoria' value={categoria} onChange={this.handleChange} />
                                     </Form.Field>
                                 </Form>
                             </div>
