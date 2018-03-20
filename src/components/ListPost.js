@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Modal, Form, Dropdown } from 'semantic-ui-react'
+import { Table, Button, Modal, Form, Dropdown, Popup } from 'semantic-ui-react'
 import { fetchPosts, votePost, deletePost, addPost, editPost } from '../utils/api'
 import { connect } from 'react-redux'
 import { loadPosts, orderPosts } from '../actions'
@@ -127,8 +127,14 @@ class ListPost extends Component {
                                 <Table.HeaderCell singleLine>Número de comentários</Table.HeaderCell>
                                 <Table.HeaderCell singleLine>
                                     Pontuação atual 
-                                        <i aria-hidden="true" className={"triangle up big icon"} onClick={() => this.orderUp()}></i>
-                                        <i aria-hidden="true" className={"triangle down big icon"} onClick={() => this.orderDown()}></i>
+                                    <Popup
+                                        trigger={
+                                            <i aria-hidden="true" className={"triangle up big icon"} onClick={() => this.orderUp()}></i>}
+                                            content='Menor para o maior' />   
+                                        <Popup
+                                        trigger={
+                                            <i aria-hidden="true" className={"triangle down big icon"} onClick={() => this.orderDown()}></i> }
+                                            content='Maior para o menor' /> 
                                 </Table.HeaderCell>
                                 <Table.HeaderCell singleLine>Votar</Table.HeaderCell>
                                 <Table.HeaderCell singleLine>Ações</Table.HeaderCell>
