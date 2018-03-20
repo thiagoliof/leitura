@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import { Table, Button, Modal, Form, Dropdown, Popup } from 'semantic-ui-react'
+import { Table, Button, Modal, Form, Dropdown, Popup, Segment, Divider, Card } from 'semantic-ui-react'
 import { fetchPosts, votePost, deletePost, addPost, editPost } from '../utils/api'
 import { connect } from 'react-redux'
 import { loadPosts, orderPosts } from '../actions'
+import FormCadasto from './FormCadasto'
 
 import uuidv1 from 'uuid/v1';
 
@@ -117,89 +118,37 @@ class ListPost extends Component {
 
         return (
             <div>
-                <Button circular icon='add' color='blue' floated='right' onClick={() => this.showModal('small')}/>
+                <Button circular icon='add' color='blue' floated='right' onClick={() => this.showModal('small')} />
                 <div className={"verticalSpace"}></div>
                 {posts.length > 0 && (
-                    <Table celled padded>
-                        <Table.Header>
-                            <Table.Row>
-                                <Table.HeaderCell singleLine>Título</Table.HeaderCell>
-                                <Table.HeaderCell singleLine>Autor</Table.HeaderCell>
-                                <Table.HeaderCell singleLine>Número de comentários</Table.HeaderCell>
-                                <Table.HeaderCell singleLine>
-                                    Pontuação atual 
-                                    <Popup
-                                        trigger={
-                                            <i aria-hidden="true" className={"triangle up big icon"} onClick={() => this.orderUp()}></i>}
-                                            content='Menor para o maior' size='mini' position='top center' />   
-                                    <Popup
-                                        trigger={
-                                            <i aria-hidden="true" className={"triangle down big icon"} onClick={() => this.orderDown()}></i> }
-                                            content='Maior para o menor' size='mini' position='top center' /> 
-                                </Table.HeaderCell>
-                                <Table.HeaderCell singleLine>Votar</Table.HeaderCell>
-                                <Table.HeaderCell singleLine>Ações</Table.HeaderCell>
-                            </Table.Row>
-                        </Table.Header>
-                        <Table.Body>
-                            {posts.map((_post, index) => (
-                                <Table.Row key={index}>
-                                    <Table.Cell>
-                                        <Link key={index} to={`/${_post.category}/${_post.id}`}>{_post.title}</Link>
-                                    </Table.Cell>
-                                    <Table.Cell singleLine>{_post.author}</Table.Cell>
-                                    <Table.Cell>{_post.commentCount} Comentário(s)</Table.Cell>
-                                    <Table.Cell textAlign='right'>
-                                        {_post.voteScore} Ponto(s)
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        <Button circular icon='thumbs outline up' onClick={() => this.voteUp(_post.id)}></Button>
-                                        <Button circular icon='thumbs outline down' onClick={() => this.voteDown(_post.id)}></Button>
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        <Button circular icon='setting' onClick={() => this.changePost(_post)}></Button>
-                                        <Button circular icon='trash' onClick={() => this.deletePost(_post.id)}></Button>
-                                    </Table.Cell>
-                                </Table.Row>
-                            ))}
-                        </Table.Body>
-                    </Table>
+                    <Segment padded>
+                        {posts.map((post, index) => (
+                            <Card.Group>
+                                <Card fluid>
+                                    <Card.Content>
+                                        <Button circular floated='right' className={"removePost"} icon='remove' onClick={() => this.deletePost(post.id)} ></Button>
+                                        <Card.Header><Link key={index} to={`/${post.category}/${post.id}`}>{post.title}</Link></Card.Header>
+                                        <Card.Description>{ post.body }</Card.Description>
+                                        <Card.Meta><Divider horizontal>Informações</Divider></Card.Meta>
+                                        <Card.Meta>Autor: { post.author }</Card.Meta>
+                                        <Card.Meta>Ponto(s): { post.voteScore } </Card.Meta>
+                                        <Card.Meta>Comentário(s): { post.commentCount } </Card.Meta>
+                                        <Card.Meta>Categoria: { post.category } </Card.Meta>
+                                    </Card.Content>
+                                    <Card.Content extra>
+                                        <div>
+                                            <Button circular icon='thumbs outline up' color='green' onClick={() => this.voteUp(post.id)}></Button>
+                                            <Button circular icon='thumbs outline down' color='red' onClick={() => this.voteDown(post.id)}></Button>
+                                            <Button circular icon='setting' color='gray' onClick={() => this.changePost(post)}></Button>
+                                        </div>
+                                    </Card.Content>
+                                </Card>
+                            </Card.Group>
+                        ))}
+                    </Segment>
                 )}
-                    <Modal size={size} open={open}>
-                        <Modal.Header>
-                            Adicionar Post
-                        </Modal.Header>
-                        <Modal.Content>
-                            <div>
-                                <Form>
-                                    <Form.Field>
-                                        <label>Título</label>
-                                        <Form.Input placeholder='Título' name='titulo' value={titulo} onChange={this.handleChange} />
-                                    </Form.Field>
-                                    <Form.Field>
-                                        <label>Corpo</label>
-                                        <Form.Input placeholder='Corpo' name='corpo' value={corpo} onChange={this.handleChange} />
-                                    </Form.Field>
-                                    <Form.Field>
-                                        <label>Autor</label>
-                                        <Form.Input placeholder='Autor' name='autor' value={autor} onChange={this.handleChange}  />
-                                    </Form.Field>
-                                    <Form.Field>
-                                        <label>categoria completar</label>
-                                        <Dropdown placeholder='Selecione a Categoria' fluid selection options={categoryOptions} name='categoria' value={categoria} onChange={this.handleChange} />
-                                    </Form.Field>
-                                </Form>
-                            </div>
-                        </Modal.Content>
-                        <Modal.Actions>
-                            <Button negative onClick={() => this.closeModal()}>
-                                Cancelar
-                            </Button>
-                            <Button positive onClick={() => this.state.id? this.editPost() :this.addPost()}>
-                                {this.state.id? 'Alterar' :  'Adicionar'}
-                            </Button>
-                        </Modal.Actions>
-                    </Modal>
+                <FormCadasto size={size} open={open} />
+                
             </div>
         )
     }
