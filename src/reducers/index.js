@@ -32,11 +32,11 @@ function posts (state = [], action){
 }
 
 function post (state = {}, action){
-    
+    const { post } = action
     switch (action.type) {
         
         case LOAD_POST :
-            return action.id
+            return post
         
         default :
             return state
@@ -56,4 +56,4 @@ function orderPost (state = {}, action){
 }
 
 
-export default combineReducers({category, posts, orderPost}) 
+export default combineReducers({ category, posts, orderPost, post }) 

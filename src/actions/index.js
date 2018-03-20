@@ -17,10 +17,10 @@ export function loadPosts (posts) {
     }
 }
 
-export function loadPost (id) {
+export function loadPost (post) {
     return {
         type: LOAD_POST,
-        id
+        post
     }
 }
 

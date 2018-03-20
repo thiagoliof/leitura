@@ -22,6 +22,19 @@ export function fetchPosts () {
         .then((res) => res.json())
 }
 
+export function fetchPost (id) {
+  
+    var request = new Request(`http://localhost:3001/posts/${id}`, {
+	    headers: new Headers({
+		    'Authorization': 'whatever'
+	    })
+    });
+
+    return fetch(request)
+        .then((res) => res.json())
+}
+
+
 
 export function votePost (id, valueVote) {
 
