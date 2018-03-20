@@ -37,6 +37,12 @@ class DetailPost extends Component {
         })
     }
 
+    changePost = (post) =>{
+        alert(`post:${ JSON.stringify(post)}`)
+        //const {id, author, body, category, title} = post
+        //this.setState({ id:id, autor:author, corpo:body, categoria:category, titulo:title, open: true })
+    }
+
     render() {
         const { post } = this.props
         return (
@@ -57,6 +63,7 @@ class DetailPost extends Component {
                             <div>
                                 <Button circular icon='thumbs outline up' color='green' onClick={() => this.voteUp(post.id)}></Button>
                                 <Button circular icon='thumbs outline down' color='red' onClick={() => this.voteDown(post.id)}></Button>
+                                <Button circular icon='setting' color='gray' onClick={() => this.changePost(post)}></Button>
                             </div>
                         </Card.Content>
                     </Card>
