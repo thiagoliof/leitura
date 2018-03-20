@@ -130,11 +130,11 @@ class ListPost extends Component {
                                     <Popup
                                         trigger={
                                             <i aria-hidden="true" className={"triangle up big icon"} onClick={() => this.orderUp()}></i>}
-                                            content='Menor para o maior' size='mini' />   
+                                            content='Menor para o maior' size='mini' position='top center' />   
                                     <Popup
                                         trigger={
                                             <i aria-hidden="true" className={"triangle down big icon"} onClick={() => this.orderDown()}></i> }
-                                            content='Maior para o menor' size='mini' /> 
+                                            content='Maior para o menor' size='mini' position='top center' /> 
                                 </Table.HeaderCell>
                                 <Table.HeaderCell singleLine>Votar</Table.HeaderCell>
                                 <Table.HeaderCell singleLine>Ações</Table.HeaderCell>
