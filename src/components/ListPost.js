@@ -141,7 +141,7 @@ class ListPost extends Component {
                                         {_post.title}
                                     </Table.Cell>
                                     <Table.Cell singleLine>{_post.author}</Table.Cell>
-                                    <Table.Cell>numero coments</Table.Cell>
+                                    <Table.Cell>{_post.commentCount} Comentário(s)</Table.Cell>
                                     <Table.Cell textAlign='right'>
                                         {_post.voteScore} Ponto(s)
                                     </Table.Cell>
