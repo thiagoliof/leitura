@@ -14,3 +14,11 @@
   display:grid !important;
   visibility: visible!important;
 }
+
+.removePost{
+  margin-right: 0px !important;
+}
+
+.ui.segment {
+  border: 0px !important
+}
