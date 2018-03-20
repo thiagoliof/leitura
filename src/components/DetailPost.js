@@ -39,7 +39,6 @@ class DetailPost extends Component {
 
     render() {
         const { post } = this.props
-        console.log(post)
         return (
             <Segment padded>
                 <Card.Group>
