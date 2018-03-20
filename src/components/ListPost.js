@@ -105,7 +105,7 @@ class ListPost extends Component {
     }
 
     render() {
-        const { post } = this.props
+        const { posts } = this.props
         const { open, size } = this.state
         const { titulo, corpo, autor, categoria } = this.state
 
@@ -119,7 +119,7 @@ class ListPost extends Component {
             <div>
                 <Button circular icon='add' color='blue' floated='right' onClick={() => this.showModal('small')}/>
                 <div className={"verticalSpace"}></div>
-                {post.length > 0 && (
+                {posts.length > 0 && (
                     <Table celled padded>
                         <Table.Header>
                             <Table.Row>
@@ -142,7 +142,7 @@ class ListPost extends Component {
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
-                            {post.map((_post, index) => (
+                            {posts.map((_post, index) => (
                                 <Table.Row key={index}>
                                     <Table.Cell>
                                         <Link key={index} to={`/${_post.category}/${_post.id}`}>{_post.title}</Link>
@@ -205,27 +205,27 @@ class ListPost extends Component {
     }
 }
 
-function mapStateToProps ({ post, orderPost }, props) {
-    var _post = post;
+function mapStateToProps ({ posts, orderPost }, props) {
+    var _posts = posts;
     if (props.filter){
-        _post = post.filter(e => e.category === props.filter.params.category)
+        _posts = posts.filter(e => e.category === props.filter.params.category)
         if (Object.keys(orderPost).length > 0) {
             if(orderPost.order === 'orderUp'){
-                _post = _post.slice().sort(function(a,b) {return (a.voteScore > b.voteScore) ? 1 : ((b.voteScore > a.voteScore) ? -1 : 0);} ); 
+                _posts = _posts.slice().sort(function(a,b) {return (a.voteScore > b.voteScore) ? 1 : ((b.voteScore > a.voteScore) ? -1 : 0);} ); 
             }
             else if(orderPost.order === 'orderDown'){
-                _post = _post.slice().sort(function(a,b) {return (a.voteScore > b.voteScore) ? 1 : ((b.voteScore > a.voteScore) ? -1 : 0);} ).reverse();
+                _posts = _posts.slice().sort(function(a,b) {return (a.voteScore > b.voteScore) ? 1 : ((b.voteScore > a.voteScore) ? -1 : 0);} ).reverse();
             }
         }
     } else {
         if(orderPost.order === 'orderUp'){
-            _post = post.slice().sort(function(a,b) {return (a.voteScore > b.voteScore) ? 1 : ((b.voteScore > a.voteScore) ? -1 : 0);} ); 
+            _posts = posts.slice().sort(function(a,b) {return (a.voteScore > b.voteScore) ? 1 : ((b.voteScore > a.voteScore) ? -1 : 0);} ); 
         }
         else if(orderPost.order === 'orderDown'){
-            _post = post.slice().sort(function(a,b) {return (a.voteScore > b.voteScore) ? 1 : ((b.voteScore > a.voteScore) ? -1 : 0);} ).reverse();
+            _posts = posts.slice().sort(function(a,b) {return (a.voteScore > b.voteScore) ? 1 : ((b.voteScore > a.voteScore) ? -1 : 0);} ).reverse();
         }
     }
-    return { post:_post, orderPost:orderPost };
+    return { posts:_posts, orderPost:orderPost };
 }
   
 function mapDispatchToProps (dispatch) {
