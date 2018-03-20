@@ -1,6 +1,7 @@
 import {
     LOAD_CATEGORY,
     LOAD_POSTS,
+    LOAD_POST,
     ORDER_POST,
 } from '../actions'
 import { combineReducers } from 'redux';
@@ -24,6 +25,18 @@ function posts (state = [], action){
         
         case LOAD_POSTS :
             return action.posts
+        
+        default :
+            return state
+    }
+}
+
+function post (state = {}, action){
+    
+    switch (action.type) {
+        
+        case LOAD_POST :
+            return action.id
         
         default :
             return state
