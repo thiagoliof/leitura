@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import { Table, Button, Modal, Form, Dropdown, Popup } from 'semantic-ui-react'
 import { fetchPosts, votePost, deletePost, addPost, editPost } from '../utils/api'
 import { connect } from 'react-redux'
@@ -144,7 +145,7 @@ class ListPost extends Component {
                             {post.map((_post, index) => (
                                 <Table.Row key={index}>
                                     <Table.Cell>
-                                        {_post.title}
+                                        <Link key={index} to={`/${_post.category}/${_post.id}`}>{_post.title}</Link>
                                     </Table.Cell>
                                     <Table.Cell singleLine>{_post.author}</Table.Cell>
                                     <Table.Cell>{_post.commentCount} Comentário(s)</Table.Cell>
@@ -164,7 +165,7 @@ class ListPost extends Component {
                         </Table.Body>
                     </Table>
                 )}
-                    <Modal size={size} open={open} onClose={this.close}>
+                    <Modal size={size} open={open}>
                         <Modal.Header>
                             Adicionar Post
                         </Modal.Header>

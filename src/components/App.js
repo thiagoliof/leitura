@@ -9,6 +9,7 @@ import { fetchCategories } from '../utils/api'
 import { capitalize } from '../utils/helpers'
 
 import ListPost from './ListPost'
+import DetailPost from './DetailPost'
 
 class App extends Component {
 
@@ -39,6 +40,11 @@ class App extends Component {
           <Route path="/:category" exact render={({ match }) => (
             <div>
               <ListPost filter={ match } />
+            </div>
+          )}/>
+          <Route path="/:category/:post_id" exact render={({ match }) => (
+            <div>
+              <DetailPost filter={ match } />
             </div>
           )}/>
         </div>
