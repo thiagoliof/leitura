@@ -108,6 +108,17 @@ class DetailPost extends Component {
                         </Card>
                     </Card.Group>
                 </Segment>
+                
+                
+                <Segment.Group>
+                    <Segment>Número de comentários: { post.commentCount }</Segment>
+                    <Segment.Group>
+                        <Segment>Nested Top</Segment>
+                        <Segment>Nested Middle</Segment>
+                        <Segment>Nested Bottom</Segment>
+                    </Segment.Group>
+                </Segment.Group>
+                
             
                 <FormPost 
                     size={size} 
