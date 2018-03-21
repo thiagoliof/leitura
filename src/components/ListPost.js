@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import { Button, Segment, Divider, Card } from 'semantic-ui-react'
+import { Button, Segment, Divider, Card, Container, Icon } from 'semantic-ui-react'
 import { fetchPosts, votePost, deletePost, addPost, editPost } from '../utils/api'
 import { connect } from 'react-redux'
 import { loadPosts, orderPosts } from '../actions'
@@ -104,6 +104,20 @@ class ListPost extends Component {
             <div>
                 <Button circular icon='add' color='blue' floated='right' onClick={() => this.showModalAddPost('small')} />
                 <div className={"verticalSpace"}></div>
+                <div>
+                <Container textAlign='center'>
+                <Button.Group center>
+                        <Button icon onClick={this.orderDown}>
+                            <Icon name='chevron up' />
+                        </Button>
+                        <Button.Or text='ou'/>
+                        <Button icon onClick={this.orderUp}>
+                            <Icon name='chevron down' />
+                        </Button>
+                    </Button.Group>
+                </Container>
+                    
+                </div>
                 {posts.length > 0 && (
                     <Segment padded>
                         {posts.map((post, index) => (
@@ -123,7 +137,7 @@ class ListPost extends Component {
                                         <div>
                                             <Button circular icon='thumbs outline up' color='green' onClick={() => this.voteUp(post.id)}></Button>
                                             <Button circular icon='thumbs outline down' color='red' onClick={() => this.voteDown(post.id)}></Button>
-                                            <Button circular icon='setting' onClick={() => this.changePost('small', post.id)}></Button>
+                                            <Button circular icon='write' onClick={() => this.changePost('small', post.id)}></Button>
                                         </div>
                                     </Card.Content>
                                 </Card>
