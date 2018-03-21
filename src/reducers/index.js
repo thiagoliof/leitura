@@ -3,6 +3,7 @@ import {
     LOAD_POSTS,
     LOAD_POST,
     ORDER_POST,
+    LOAD_COMMENTS
 } from '../actions'
 import { combineReducers } from 'redux';
 
@@ -55,5 +56,17 @@ function orderPost (state = {}, action){
     }
 }
 
+function comment (state = [], action){
+    
+    switch (action.type) {
+        
+        case LOAD_COMMENTS :
+            return action.comments
+        
+        default :
+            return state
+    }
+}
 
-export default combineReducers({ category, posts, orderPost, post }) 
+
+export default combineReducers({ category, posts, orderPost, post, comment }) 
