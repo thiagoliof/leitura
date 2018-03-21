@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Segment } from 'semantic-ui-react'
 
-class Comments extends Component {
+class ListComment extends Component {
     
+    state = { 
+    }
+
     componentDidMount() {        
     }
 
@@ -20,4 +23,4 @@ class Comments extends Component {
         )
     }
 }
-export default Comments
+export default ListComment

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Modal, Form, Button, Dropdown } from 'semantic-ui-react'
 import { fetchPost } from '../utils/api'
 
-class FormPost extends Component {
+class FormCadasto extends Component {
 
     state = {     
         title:      '',
@@ -10,11 +10,6 @@ class FormPost extends Component {
         author:     '',
         category:   '',
     }
-
-    constructor(props) {
-        super(props)
-    }
-
     componentWillReceiveProps(nextProps) {
         if (nextProps.idEdit) {
             const idEdit = nextProps.idEdit;
@@ -110,4 +105,4 @@ class FormPost extends Component {
     }
 }
   
-export default FormPost
+export default FormCadasto

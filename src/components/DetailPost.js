@@ -2,17 +2,20 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import { Button, Card, Segment, Divider } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { fetchPost, votePost, editPost, deletePost } from '../utils/api'
+import { fetchPost, votePost, editPost, deletePost, addComments } from '../utils/api'
 import { loadPost } from '../actions'
 import FormPost from './FormPost'
-import Comments from './Comments'
+import ListComment from './ListComment'
+import FormComment from './FormComment'
+import uuidv1 from 'uuid/v1';
 
 class DetailPost extends Component {
     
     state = { 
         open: false,
         idEdit: '',
-        redirect : false
+        redirect : false,
+        openModalComment: false
     }
 
     componentDidMount() {
@@ -72,8 +75,24 @@ class DetailPost extends Component {
     }
 
     addComment = (size, postId) =>{
-        alert(`size: ${size}`)
-        alert(`postId: ${postId}`)
+        this.setState(
+            { openModalComment: true, size }
+        )
+    }
+
+    closeModalComment = _ => {
+        this.setState(
+            { openModalComment: false }
+        )
+        
+    }
+
+    addModalComent = ({postId, comment, author}) => {
+        const id = uuidv1();
+        addComments(id, Date.now, comment, author, postId).then(dados => {
+            this.getPosts()
+            this.closeModalComment()    
+        })
     }
 
     render() {
@@ -83,7 +102,7 @@ class DetailPost extends Component {
         }
 
         const { post } = this.props
-        const { open, size, idEdit } = this.state
+        const { open, size, idEdit, openModalComment } = this.state
         const categoryOptions = [
             { value: 'react',   text: 'React'},
             { value: 'redux',   text: 'Redux'},
@@ -116,7 +135,7 @@ class DetailPost extends Component {
                     </Card.Group>
                 </Segment>
                 
-                <Comments commentCount={post.commentCount} />
+                <ListComment commentCount={post.commentCount} />
                             
                 <FormPost 
                     size={size} 
@@ -125,6 +144,14 @@ class DetailPost extends Component {
                     onCloseModal={this.closeModal}
                     onChangePost={this.editPost}
                     idEdit={idEdit}
+                />
+
+                <FormComment 
+                    size={size} 
+                    open={openModalComment}
+                    onCloseModalComment={this.closeModalComment} 
+                    postId={post.id}
+                    onAddModalComment={this.addModalComent} 
                 />
             </div>
             
