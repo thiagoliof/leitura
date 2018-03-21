@@ -50,7 +50,7 @@ class DetailPost extends Component {
                 <Card.Group>
                     <Card fluid>
                         <Card.Content>
-                            <Button circular floated='right' icon='remove' onClick={() => this.deletePost(post.id)} ></Button>
+                            <Button circular floated='right' icon='remove' className={"removePost"} onClick={() => this.deletePost(post.id)} ></Button>
                             <Card.Header>{ post.title }</Card.Header>
                             <Card.Description>{ post.body }</Card.Description>
                             <Card.Meta><Divider horizontal>Informações</Divider></Card.Meta>
