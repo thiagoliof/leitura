@@ -71,6 +71,11 @@ class DetailPost extends Component {
         })
     }
 
+    addComment = (size, postId) =>{
+        alert(`size: ${size}`)
+        alert(`postId: ${postId}`)
+    }
+
     render() {
 
         if (this.state.redirect === true) {
@@ -103,6 +108,7 @@ class DetailPost extends Component {
                                 <div>
                                     <Button circular icon='thumbs outline up' color='green' onClick={() => this.voteUp(post.id)}></Button>
                                     <Button circular icon='thumbs outline down' color='red' onClick={() => this.voteDown(post.id)}></Button>
+                                    <Button circular icon='comments' color='blue' onClick={() => this.addComment('small', post.id)}></Button>
                                     <Button circular icon='write' onClick={() => this.changePost('small', post.id)}></Button>
                                 </div>
                             </Card.Content>
