@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { fetchPost, votePost, editPost, deletePost } from '../utils/api'
 import { loadPost } from '../actions'
 import FormPost from './FormPost'
+import Comments from './Comments'
 
 class DetailPost extends Component {
     
@@ -109,17 +110,8 @@ class DetailPost extends Component {
                     </Card.Group>
                 </Segment>
                 
-                
-                <Segment.Group>
-                    <Segment>Número de comentários: { post.commentCount }</Segment>
-                    <Segment.Group>
-                        <Segment>Nested Top</Segment>
-                        <Segment>Nested Middle</Segment>
-                        <Segment>Nested Bottom</Segment>
-                    </Segment.Group>
-                </Segment.Group>
-                
-            
+                <Comments commentCount={post.commentCount} />
+                            
                 <FormPost 
                     size={size} 
                     open={open} 
