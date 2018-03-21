@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Form, Button, Dropdown } from 'semantic-ui-react'
+import { Modal, Form, Button } from 'semantic-ui-react'
 import { fetchPost } from '../utils/api'
 
 class FormComment extends Component {

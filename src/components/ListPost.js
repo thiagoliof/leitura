@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import { Button, Segment, Divider, Card, Container, Icon } from 'semantic-ui-react'
+import { Button, Segment, Divider, Card, Container, Icon, Popup } from 'semantic-ui-react'
 import { fetchPosts, votePost, deletePost, addPost, editPost } from '../utils/api'
 import { connect } from 'react-redux'
 import { loadPosts, orderPosts } from '../actions'
@@ -102,19 +102,38 @@ class ListPost extends Component {
 
         return (
             <div>
-                <Button circular icon='add' color='blue' floated='right' onClick={() => this.showModalAddPost('small')} />
+                <Popup 
+                    trigger={
+                        <Button circular icon='add' color='blue' floated='right' onClick={() => this.showModalAddPost('small')} />
+                    }
+                    content='Add Post'
+                    position='bottom right'
+                />
+                
                 <div className={"verticalSpace"}></div>
                 {posts.length > 0 && (
                     <div>
                         <Container textAlign='center'>
                         <Button.Group>
-                                <Button icon onClick={this.orderDown}>
-                                    <Icon name='chevron up' />
-                                </Button>
+                            <Popup 
+                                trigger={
+                                    <Button icon onClick={this.orderDown}>
+                                        <Icon name='chevron up' />
+                                    </Button>
+                                }
+                                content='Ordenar do maior para o menor'
+                                position='top right'
+                            />
                                 <Button.Or text='ou'/>
-                                <Button icon onClick={this.orderUp}>
-                                    <Icon name='chevron down' />
-                                </Button>
+                            <Popup 
+                                trigger={
+                                    <Button icon onClick={this.orderUp}>
+                                        <Icon name='chevron down' />
+                                    </Button>
+                                }
+                                content='Ordenar do menor para o maior'
+                                position='top right'
+                            />
                             </Button.Group>
                         </Container>
                     </div>
@@ -125,7 +144,13 @@ class ListPost extends Component {
                             <Card.Group key={index}>
                                 <Card fluid>
                                     <Card.Content>
-                                        <Button circular floated='right' className={"removePost"} icon='remove' onClick={() => this.deletePost(post.id)} ></Button>
+                                        <Popup 
+                                            trigger={
+                                                <Button circular floated='right' className={"removePost"} icon='remove' onClick={() => this.deletePost(post.id)} ></Button>
+                                            }
+                                            content='Remover Post'
+                                            position='top left'
+                                        />
                                         <Card.Header><Link key={index} to={`/${post.category}/${post.id}`}>{post.title}</Link></Card.Header>
                                         <Card.Description>{ post.body }</Card.Description>
                                         <Card.Meta><Divider horizontal>Informações</Divider></Card.Meta>
@@ -136,9 +161,29 @@ class ListPost extends Component {
                                     </Card.Content>
                                     <Card.Content extra>
                                         <div>
-                                            <Button circular icon='thumbs outline up' color='green' onClick={() => this.voteUp(post.id)}></Button>
-                                            <Button circular icon='thumbs outline down' color='red' onClick={() => this.voteDown(post.id)}></Button>
-                                            <Button circular icon='write' onClick={() => this.changePost('small', post.id)}></Button>
+                                            <Popup 
+                                                trigger={
+                                                    <Button circular icon='thumbs outline up' color='green' onClick={() => this.voteUp(post.id)}></Button>
+                                                }
+                                                content='Votar Positivamente'
+                                                position='top left'
+                                            />
+                                            <Popup 
+                                                trigger={
+                                                    <Button circular icon='thumbs outline down' color='red' onClick={() => this.voteDown(post.id)}></Button>
+                                                }
+                                                content='Votar Negativamente'
+                                                position='top left'
+                                            />
+                                            
+                                            <Popup 
+                                                trigger={
+                                                    <Button circular icon='write' onClick={() => this.changePost('small', post.id)}></Button>
+                                                }
+                                                content='Alterar Post'
+                                                position='top left'
+                                            />
+                                            
                                         </div>
                                     </Card.Content>
                                 </Card>

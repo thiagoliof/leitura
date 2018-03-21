@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
-import { Button, Card, Segment, Divider } from 'semantic-ui-react'
+import { Button, Card, Segment, Divider, Popup } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { fetchPost, votePost, editPost, deletePost, addComments } from '../utils/api'
 import { loadPost } from '../actions'
@@ -114,7 +114,13 @@ class DetailPost extends Component {
                     <Card.Group>
                         <Card fluid>
                             <Card.Content>
-                                <Button circular floated='right' icon='remove' className={"removePost"} onClick={() => this.deletePost(post.id)} ></Button>
+                                <Popup 
+                                    trigger={
+                                        <Button circular floated='right' icon='remove' className={"removePost"} onClick={() => this.deletePost(post.id)} ></Button>
+                                    }
+                                    content='Remover Post'
+                                    position='top left'
+                                />
                                 <Card.Header>{ post.title }</Card.Header>
                                 <Card.Description>{ post.body }</Card.Description>
                                 <Card.Meta><Divider horizontal>Informações</Divider></Card.Meta>
@@ -125,10 +131,34 @@ class DetailPost extends Component {
                             </Card.Content>
                             <Card.Content extra>
                                 <div>
-                                    <Button circular icon='thumbs outline up' color='green' onClick={() => this.voteUp(post.id)}></Button>
-                                    <Button circular icon='thumbs outline down' color='red' onClick={() => this.voteDown(post.id)}></Button>
-                                    <Button circular icon='comments' color='blue' onClick={() => this.addComment('small', post.id)}></Button>
-                                    <Button circular icon='write' onClick={() => this.changePost('small', post.id)}></Button>
+                                    <Popup 
+                                        trigger={
+                                            <Button circular icon='thumbs outline up' color='green' onClick={() => this.voteUp(post.id)}></Button>
+                                        }
+                                        content='Votar positivamente'
+                                        position='top left'
+                                    />
+                                    <Popup 
+                                        trigger={
+                                            <Button circular icon='thumbs outline down' color='red' onClick={() => this.voteDown(post.id)}></Button>
+                                        }
+                                        content='Votar negativamente'
+                                        position='top left'
+                                    />
+                                    <Popup 
+                                        trigger={
+                                            <Button circular icon='comments' color='blue' onClick={() => this.addComment('small', post.id)}></Button>
+                                        }
+                                        content='Add comentário'
+                                        position='top left'
+                                    />
+                                    <Popup 
+                                        trigger={
+                                            <Button circular icon='write' onClick={() => this.changePost('small', post.id)}></Button>
+                                        }
+                                        content='Alterar post'
+                                        position='top left'
+                                    />
                                 </div>
                             </Card.Content>
                         </Card>
