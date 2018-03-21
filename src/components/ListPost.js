@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import { Table, Button, Modal, Form, Dropdown, Popup, Segment, Divider, Card } from 'semantic-ui-react'
+import { Button, Segment, Divider, Card } from 'semantic-ui-react'
 import { fetchPosts, votePost, deletePost, addPost, editPost } from '../utils/api'
 import { connect } from 'react-redux'
 import { loadPosts, orderPosts } from '../actions'
@@ -13,11 +13,7 @@ class ListPost extends Component {
 
     state = { 
         open: false,
-        // form
-        titulo: '', 
-        corpo: '', 
-        autor: '', 
-        categoria: '', 
+        idEdit: '',
     }
     
 
@@ -44,9 +40,10 @@ class ListPost extends Component {
         })
     }
 
-    changePost = (post) =>{
-        const {id, author, body, category, title} = post
-        this.setState({ id:id, autor:author, corpo:body, categoria:category, titulo:title, open: true })
+    changePost = (size, idEdit) => {
+        this.setState(
+            { open: true, size, idEdit: idEdit }
+        )
     }
 
     deletePost = (id) =>{
@@ -65,51 +62,38 @@ class ListPost extends Component {
         setOrderPosts({order:`orderDown`})
     }
 
-    showModal = size => {
-        //alert('entrei')
-        this.setState({ size, open: true })
+    showModalAddPost = size => {
+        this.setState({ 
+                size, 
+                open: true 
+        })
     }
     closeModal = () => {
-        this.clearState();
-    }
-
-    clearState = () => {
         this.setState({ 
-            open: false,  
-            titulo: '', 
-            corpo: '', 
-            autor: '', 
-            categoria: '',
-            id: ''
+            open: false,
+            idEdit: ''
         })
     }
 
-    addPost = () => {
-        const {titulo, corpo, autor, categoria}  = this.state
+    addPost = ({title, body, author, category}) => {
         const id = uuidv1();
-        addPost(id, Date.now, titulo, corpo, autor, categoria).then(dados => {
+        addPost(id, Date.now, title, body, author, category).then(dados => {
             this.getPosts();
-            this.clearState();
+            this.closeModal();
         })
     }
 
-    editPost = () => {
-        const {id, titulo, corpo, autor, categoria}  = this.state
-        editPost(id, Date.now, titulo, corpo, autor, categoria).then(dados => {
+    editPost = ({idEdit, title, body, author, category}) => {
+        editPost(idEdit, Date.now, title, body, author, category).then(dados => {
             this.getPosts();
-            this.clearState();
+            this.closeModal();
         })
-    }
-
-    handleChange = (e, { name, value }) => {
-        this.setState({ [name]: value })
+        
     }
 
     render() {
         const { posts } = this.props
-        const { open, size } = this.state
-        const { titulo, corpo, autor, categoria } = this.state
-
+        const { open, size, idEdit } = this.state
         const categoryOptions = [
             { value: 'react',   text: 'React'},
             { value: 'redux',   text: 'Redux'},
@@ -118,12 +102,12 @@ class ListPost extends Component {
 
         return (
             <div>
-                <Button circular icon='add' color='blue' floated='right' onClick={() => this.showModal('small')} />
+                <Button circular icon='add' color='blue' floated='right' onClick={() => this.showModalAddPost('small')} />
                 <div className={"verticalSpace"}></div>
                 {posts.length > 0 && (
                     <Segment padded>
                         {posts.map((post, index) => (
-                            <Card.Group>
+                            <Card.Group key={index}>
                                 <Card fluid>
                                     <Card.Content>
                                         <Button circular floated='right' className={"removePost"} icon='remove' onClick={() => this.deletePost(post.id)} ></Button>
@@ -139,7 +123,7 @@ class ListPost extends Component {
                                         <div>
                                             <Button circular icon='thumbs outline up' color='green' onClick={() => this.voteUp(post.id)}></Button>
                                             <Button circular icon='thumbs outline down' color='red' onClick={() => this.voteDown(post.id)}></Button>
-                                            <Button circular icon='setting' color='gray' onClick={() => this.changePost(post)}></Button>
+                                            <Button circular icon='setting' onClick={() => this.changePost('small', post.id)}></Button>
                                         </div>
                                     </Card.Content>
                                 </Card>
@@ -147,7 +131,17 @@ class ListPost extends Component {
                         ))}
                     </Segment>
                 )}
-                <FormCadasto size={size} open={open} />
+                
+                <FormCadasto 
+                    size={size} 
+                    open={open} 
+                    categoryOptions={categoryOptions}
+                    onCloseModal={this.closeModal}
+                    onAddPost={this.addPost}
+                    onChangePost={this.editPost}
+                    
+                    idEdit={idEdit}
+                />
                 
             </div>
         )

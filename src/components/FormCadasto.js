@@ -1,32 +1,74 @@
 import React, { Component } from 'react';
 import { Modal, Form, Button, Dropdown } from 'semantic-ui-react'
-
+import { fetchPost } from '../utils/api'
 
 class FormCadasto extends Component {
 
-    state = { 
-        
-        // form
-        titulo: '', 
-        corpo: '', 
-        autor: '', 
-        categoria: '', 
+    state = {     
+        title:      '',
+        body:       '',
+        author:     '',
+        category:   '',
     }
 
     constructor(props) {
         super(props)
-        console.log(this.props)
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.idEdit) {
+            const idEdit = nextProps.idEdit;
+            fetchPost(idEdit).then(dados => {
+                this.setState(
+                    { 
+                        idEdit : idEdit,
+                        //
+                        title: dados.title,
+                        body: dados.body,
+                        author: dados.author,
+                        category: dados.category 
+                    })
+            })
+        }
+    }
+
+    handleChange = (e, { name, value }) => {
+        this.setState({ [name]: value })
+    }
+
+    clearState = _ =>{
+        this.setState({ 
+            idEdit : '',
+            //
+            title:  '',
+            body: '',
+            author: '',
+            category: '',
+        })
+    }
+
+    handleAddPost = _ =>{
+        const { title, body, author, category } = this.state
+        this.props.onAddPost({title, body, author, category})
+        this.clearState()
+    }
+
+    handleEditPost = _ =>{
+        const { idEdit, title, body, author, category } = this.state
+        this.props.onChangePost({idEdit, title, body, author, category})
+        this.clearState()
+        
+    }
+
+    handleCloseModal(){
+        this.clearState()
+        this.props.onCloseModal()
     }
 
     render() {     
         
-        const categoryOptions = [
-            { value: 'react',   text: 'React'},
-            { value: 'redux',   text: 'Redux'},
-            { value: 'udacity', text: 'Udacity'},
-        ]
-
-        const { titulo, corpo, autor, categoria } = this.state
+        const { title, body, author, category } = this.state
+        const { categoryOptions } = this.props
         
         return (
             <Modal size={this.props.size} open={this.props.open}>
@@ -38,29 +80,29 @@ class FormCadasto extends Component {
                         <Form>
                             <Form.Field>
                                 <label>Título</label>
-                                <Form.Input placeholder='Título' name='titulo' value={titulo} onChange={this.handleChange} />
+                                <Form.Input placeholder='Título' name='title' value={title} onChange={this.handleChange} />
                             </Form.Field>
                             <Form.Field>
                                 <label>Corpo</label>
-                                <Form.Input placeholder='Corpo' name='corpo' value={corpo} onChange={this.handleChange} />
+                                <Form.Input placeholder='Corpo' name='body' value={body} onChange={this.handleChange} />
                             </Form.Field>
                             <Form.Field>
                                 <label>Autor</label>
-                                <Form.Input placeholder='Autor' name='autor' value={autor} onChange={this.handleChange}  />
+                                <Form.Input placeholder='Autor' name='author' value={author} onChange={this.handleChange}  />
                             </Form.Field>
                             <Form.Field>
                                 <label>categoria completar</label>
-                                <Dropdown placeholder='Selecione a Categoria' fluid selection options={categoryOptions} name='categoria' value={categoria} onChange={this.handleChange} />
+                                <Dropdown placeholder='Selecione a Categoria' fluid selection options={categoryOptions} name='category' value={category} onChange={this.handleChange} />
                             </Form.Field>
                         </Form>
                     </div>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button negative>
+                    <Button negative onClick={()=> this.handleCloseModal()}>
                         Cancelar
                     </Button>
-                    <Button>
-                        {this.state.id? 'Alterar' :  'Adicionar'}
+                    <Button onClick={()=> this.state.idEdit ? this.handleEditPost() : this.handleAddPost()}>
+                        {this.state.idEdit ? "Alterar" : "Adicionar"}
                     </Button>
                 </Modal.Actions>
             </Modal>
