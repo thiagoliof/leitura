@@ -104,20 +104,21 @@ class ListPost extends Component {
             <div>
                 <Button circular icon='add' color='blue' floated='right' onClick={() => this.showModalAddPost('small')} />
                 <div className={"verticalSpace"}></div>
-                <div>
-                <Container textAlign='center'>
-                <Button.Group center>
-                        <Button icon onClick={this.orderDown}>
-                            <Icon name='chevron up' />
-                        </Button>
-                        <Button.Or text='ou'/>
-                        <Button icon onClick={this.orderUp}>
-                            <Icon name='chevron down' />
-                        </Button>
-                    </Button.Group>
-                </Container>
-                    
-                </div>
+                {posts.length > 0 && (
+                    <div>
+                        <Container textAlign='center'>
+                        <Button.Group>
+                                <Button icon onClick={this.orderDown}>
+                                    <Icon name='chevron up' />
+                                </Button>
+                                <Button.Or text='ou'/>
+                                <Button icon onClick={this.orderUp}>
+                                    <Icon name='chevron down' />
+                                </Button>
+                            </Button.Group>
+                        </Container>
+                    </div>
+                )}
                 {posts.length > 0 && (
                     <Segment padded>
                         {posts.map((post, index) => (
@@ -153,7 +154,6 @@ class ListPost extends Component {
                     onCloseModal={this.closeModal}
                     onAddPost={this.addPost}
                     onChangePost={this.editPost}
-                    
                     idEdit={idEdit}
                 />
                 
