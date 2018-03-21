@@ -10,11 +10,6 @@ class FormCadasto extends Component {
         author:     '',
         category:   '',
     }
-
-    constructor(props) {
-        super(props)
-    }
-
     componentWillReceiveProps(nextProps) {
         if (nextProps.idEdit) {
             const idEdit = nextProps.idEdit;

@@ -2,16 +2,20 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import { Button, Card, Segment, Divider } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { fetchPost, votePost, editPost, deletePost } from '../utils/api'
+import { fetchPost, votePost, editPost, deletePost, addComments } from '../utils/api'
 import { loadPost } from '../actions'
-import FormCadasto from './FormCadasto'
+import FormPost from './FormPost'
+import ListComment from './ListComment'
+import FormComment from './FormComment'
+import uuidv1 from 'uuid/v1';
 
 class DetailPost extends Component {
     
     state = { 
         open: false,
         idEdit: '',
-        redirect : false
+        redirect : false,
+        openModalComment: false
     }
 
     componentDidMount() {
@@ -70,6 +74,27 @@ class DetailPost extends Component {
         })
     }
 
+    addComment = (size, postId) =>{
+        this.setState(
+            { openModalComment: true, size }
+        )
+    }
+
+    closeModalComment = _ => {
+        this.setState(
+            { openModalComment: false }
+        )
+        
+    }
+
+    addModalComent = ({postId, comment, author}) => {
+        const id = uuidv1();
+        addComments(id, Date.now, comment, author, postId).then(dados => {
+            this.getPosts()
+            this.closeModalComment()    
+        })
+    }
+
     render() {
 
         if (this.state.redirect === true) {
@@ -77,7 +102,7 @@ class DetailPost extends Component {
         }
 
         const { post } = this.props
-        const { open, size, idEdit } = this.state
+        const { open, size, idEdit, openModalComment } = this.state
         const categoryOptions = [
             { value: 'react',   text: 'React'},
             { value: 'redux',   text: 'Redux'},
@@ -102,14 +127,17 @@ class DetailPost extends Component {
                                 <div>
                                     <Button circular icon='thumbs outline up' color='green' onClick={() => this.voteUp(post.id)}></Button>
                                     <Button circular icon='thumbs outline down' color='red' onClick={() => this.voteDown(post.id)}></Button>
+                                    <Button circular icon='comments' color='blue' onClick={() => this.addComment('small', post.id)}></Button>
                                     <Button circular icon='write' onClick={() => this.changePost('small', post.id)}></Button>
                                 </div>
                             </Card.Content>
                         </Card>
                     </Card.Group>
                 </Segment>
-            
-                <FormCadasto 
+                
+                <ListComment commentCount={post.commentCount} />
+                            
+                <FormPost 
                     size={size} 
                     open={open} 
                     categoryOptions={categoryOptions}
@@ -118,6 +146,13 @@ class DetailPost extends Component {
                     idEdit={idEdit}
                 />
 
+                <FormComment 
+                    size={size} 
+                    open={openModalComment}
+                    onCloseModalComment={this.closeModalComment} 
+                    postId={post.id}
+                    onAddModalComment={this.addModalComent} 
+                />
             </div>
             
         )

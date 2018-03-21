@@ -99,3 +99,34 @@ export function deletePost (id) {
         })
     }).then((res) => res.json())
 }
+
+export function fetchComents (id) {
+  
+    var request = new Request(`http://localhost:3001/posts/${id}/comments`, {
+	    headers: new Headers({
+		    'Authorization': 'whatever'
+	    })
+    });
+
+    return fetch(request)
+        .then((res) => res.json())
+}
+
+export function addComments (id, timestamp, body, author, parentId) {
+
+    return fetch(`http://localhost:3001/comments/`, {
+        method: 'POST',
+        headers: {
+            'Authorization': 'whatever',
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            id:id,
+            timestamp:timestamp,
+            body:body,
+            author:author,
+            parentId:parentId
+            
+        })
+    }).then((res) => res.json())
+}
