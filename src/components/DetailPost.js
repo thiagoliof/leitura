@@ -63,7 +63,7 @@ class DetailPost extends Component {
                             <div>
                                 <Button circular icon='thumbs outline up' color='green' onClick={() => this.voteUp(post.id)}></Button>
                                 <Button circular icon='thumbs outline down' color='red' onClick={() => this.voteDown(post.id)}></Button>
-                                <Button circular icon='setting' color='gray' onClick={() => this.changePost(post)}></Button>
+                                <Button circular icon='write' color='gray' onClick={() => this.changePost(post)}></Button>
                             </div>
                         </Card.Content>
                     </Card>
