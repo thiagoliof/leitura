@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Modal, Form, Button, Dropdown } from 'semantic-ui-react'
 import { fetchPost } from '../utils/api'
 
-class FormCadasto extends Component {
+class FormPost extends Component {
 
     state = {     
         title:      '',
@@ -110,4 +110,4 @@ class FormCadasto extends Component {
     }
 }
   
-export default FormCadasto
+export default FormPost

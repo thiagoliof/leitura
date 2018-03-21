@@ -4,7 +4,7 @@ import { Button, Segment, Divider, Card, Container, Icon } from 'semantic-ui-rea
 import { fetchPosts, votePost, deletePost, addPost, editPost } from '../utils/api'
 import { connect } from 'react-redux'
 import { loadPosts, orderPosts } from '../actions'
-import FormCadasto from './FormCadasto'
+import FormPost from './FormPost'
 
 import uuidv1 from 'uuid/v1';
 
@@ -147,7 +147,7 @@ class ListPost extends Component {
                     </Segment>
                 )}
                 
-                <FormCadasto 
+                <FormPost 
                     size={size} 
                     open={open} 
                     categoryOptions={categoryOptions}

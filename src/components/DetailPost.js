@@ -4,7 +4,7 @@ import { Button, Card, Segment, Divider } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { fetchPost, votePost, editPost, deletePost } from '../utils/api'
 import { loadPost } from '../actions'
-import FormCadasto from './FormCadasto'
+import FormPost from './FormPost'
 
 class DetailPost extends Component {
     
@@ -109,7 +109,7 @@ class DetailPost extends Component {
                     </Card.Group>
                 </Segment>
             
-                <FormCadasto 
+                <FormPost 
                     size={size} 
                     open={open} 
                     categoryOptions={categoryOptions}
@@ -117,7 +117,6 @@ class DetailPost extends Component {
                     onChangePost={this.editPost}
                     idEdit={idEdit}
                 />
-
             </div>
             
         )
