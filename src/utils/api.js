@@ -99,3 +99,15 @@ export function deletePost (id) {
         })
     }).then((res) => res.json())
 }
+
+export function fetchComents (id) {
+  
+    var request = new Request(`http://localhost:3001/posts/${id}/comments`, {
+	    headers: new Headers({
+		    'Authorization': 'whatever'
+	    })
+    });
+
+    return fetch(request)
+        .then((res) => res.json())
+}
