@@ -14,11 +14,11 @@ class ListComment extends Component {
     }
 
     voteCommentUp = commentId => {
-        alert(`voteCommentUp - ${commentId}`)
+        this.props.onVoteComment(commentId, "upVote")
     }
 
     voteCommentDown = commentId => {
-        alert(`voteCommentDown - ${commentId}`)
+        this.props.onVoteComment(commentId, "downVote")
     }
 
     deleteComment = commentId => {

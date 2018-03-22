@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import { Button, Card, Segment, Divider, Popup } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { fetchPost, votePost, editPost, deletePost, addComments, fetchComents, deleteComment } from '../utils/api'
+import { fetchPost, votePost, editPost, deletePost, addComments, fetchComents, deleteComment, voteComment } from '../utils/api'
 import { loadPost, loadComments } from '../actions'
 import FormPost from './FormPost'
 import ListComment from './ListComment'
@@ -113,6 +113,13 @@ class DetailPost extends Component {
         })
     }
 
+    voteComment = (id, vote) => {
+        voteComment(id, vote).then(dados => {
+            this.getPosts()
+            this.getComments()
+        })
+    }
+
     render() {
 
         if (this.state.redirect === true) {
@@ -186,7 +193,8 @@ class DetailPost extends Component {
                 <ListComment 
                     commentCount={post.commentCount} 
                     comments={comment} 
-                    onDeleteComment={this.deleteComment}  
+                    onDeleteComment={this.deleteComment}
+                    onVoteComment={this.voteComment}  
                 />
                             
                 <FormPost 
