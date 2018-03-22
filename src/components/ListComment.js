@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Card, Button, Header } from 'semantic-ui-react'
+import { Segment, Card, Button, Header, Popup } from 'semantic-ui-react'
 
 class ListComment extends Component {
     
@@ -45,10 +45,38 @@ class ListComment extends Component {
                                         </Card.Content>
                                         <Card.Content extra>
                                             <div>
-                                                <Button circular icon='thumbs outline up' color='green' onClick={() => this.voteCommentUp(comment.id)} ></Button>
-                                                <Button circular icon='thumbs outline down' color='red' onClick={() => this.voteCommentDown(comment.id)} ></Button>
-                                                <Button circular icon='write' onClick={() => this.changeComment(comment.id)}></Button>                
-                                                <Button circular icon='remove' onClick={() => this.deleteComment(comment.id)}></Button>
+                                                <Popup 
+                                                    trigger={
+                                                        <Button circular icon='thumbs outline up' color='green' onClick={() => this.voteCommentUp(comment.id)} ></Button>
+                                                    }
+                                                    content='Votar positivamente'
+                                                    position='top left'
+                                                />
+
+                                                <Popup 
+                                                    trigger={
+                                                        <Button circular icon='thumbs outline down' color='red' onClick={() => this.voteCommentDown(comment.id)} ></Button>
+                                                    }
+                                                    content='Votar negativamente'
+                                                    position='top left'
+                                                />
+                                                
+                                                <Popup 
+                                                    trigger={
+                                                        <Button circular icon='write' onClick={() => this.changeComment(comment.id)}></Button>                
+                                                    }
+                                                    content='Alterar comentário'
+                                                    position='top left'
+                                                />
+
+                                                <Popup 
+                                                    trigger={
+                                                        <Button circular icon='remove' onClick={() => this.deleteComment(comment.id)}></Button>
+                                                    }
+                                                    content='Excluir comentário'
+                                                    position='top left'
+                                                />
+                                                
                                             </div>
                                         </Card.Content>
                                     </Card>
