@@ -18,7 +18,7 @@ Para o tratamento de manipulação de estados foi utilizado o [Redux](https://re
 
 ## Considerações Finais
 
-Esse projeto fez uso do [Create React App](https://github.com/facebookincubator/create-react-app).
+Esse projeto fez uso do [Create React App] (https://github.com/facebookincubator/create-react-app) para a geração incial do projeto
 
 A Aplicação foi desenvolvida e otimizada para o Google Chrome, porém deve funcionar na maioria dos navegadores.
 
