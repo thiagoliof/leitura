@@ -32,7 +32,7 @@ export function orderPosts (order) {
     }
 }
 
-export function loadComments ({comments}) {
+export function loadComments (comments) {
     return {
         type: LOAD_COMMENTS,
         comments

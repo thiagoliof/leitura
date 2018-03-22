@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import { Button, Card, Segment, Divider, Popup } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { fetchPost, votePost, editPost, deletePost, addComments } from '../utils/api'
-import { loadPost } from '../actions'
+import { fetchPost, votePost, editPost, deletePost, addComments, fetchComents, deleteComment } from '../utils/api'
+import { loadPost, loadComments } from '../actions'
 import FormPost from './FormPost'
 import ListComment from './ListComment'
 import FormComment from './FormComment'
@@ -20,6 +20,7 @@ class DetailPost extends Component {
 
     componentDidMount() {
         this.getPosts()
+        this.getComments()
     }
 
     getPosts = () => {
@@ -27,6 +28,15 @@ class DetailPost extends Component {
         const { loadPost } = this.props
         fetchPost(post_id).then(dados => {
             loadPost(dados)
+        })
+    }
+
+    getComments = () => {
+        const { post_id } = this.props.filter.params
+        const { loadComments } = this.props
+
+        fetchComents(post_id).then(dados => {
+            loadComments(dados)
         })
     }
 
@@ -91,7 +101,15 @@ class DetailPost extends Component {
         const id = uuidv1();
         addComments(id, Date.now, comment, author, postId).then(dados => {
             this.getPosts()
+            this.getComments()
             this.closeModalComment()    
+        })
+    }
+
+    deleteComment = commentId => {
+        deleteComment(commentId).then(dados => {
+            this.getPosts()
+            this.getComments()
         })
     }
 
@@ -101,7 +119,7 @@ class DetailPost extends Component {
             return <Redirect to='/' />
         }
 
-        const { post } = this.props
+        const { post, comment } = this.props
         const { open, size, idEdit, openModalComment } = this.state
         const categoryOptions = [
             { value: 'react',   text: 'React'},
@@ -165,7 +183,11 @@ class DetailPost extends Component {
                     </Card.Group>
                 </Segment>
                 
-                <ListComment commentCount={post.commentCount} />
+                <ListComment 
+                    commentCount={post.commentCount} 
+                    comments={comment} 
+                    onDeleteComment={this.deleteComment}  
+                />
                             
                 <FormPost 
                     size={size} 
@@ -188,13 +210,14 @@ class DetailPost extends Component {
         )
     }
 }
-function mapStateToProps ({ post }, props) {
-    return {post:post}
+function mapStateToProps ({ post, comment }, props) {
+    return {post:post, comment:comment}
 }
 
 function mapDispatchToProps (dispatch) {
     return {
       loadPost: (data) => dispatch(loadPost(data)),
+      loadComments: (data) => dispatch(loadComments(data)),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(DetailPost)

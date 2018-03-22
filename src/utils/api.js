@@ -130,3 +130,14 @@ export function addComments (id, timestamp, body, author, parentId) {
         })
     }).then((res) => res.json())
 }
+
+
+export function deleteComment (id) {
+
+    return fetch(`http://localhost:3001/comments/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'whatever',
+        },    
+    }).then((res) => res.json())
+}
