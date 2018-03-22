@@ -15,7 +15,11 @@ class DetailPost extends Component {
         open: false,
         idEdit: '',
         redirect : false,
-        openModalComment: false
+        
+        // modal comentário
+        openModalComment: false,
+        idComment: ''
+
     }
 
     componentDidMount() {
@@ -92,7 +96,7 @@ class DetailPost extends Component {
 
     closeModalComment = _ => {
         this.setState(
-            { openModalComment: false }
+            { openModalComment: false, commentId: '' }
         )
         
     }
@@ -118,6 +122,21 @@ class DetailPost extends Component {
             this.getPosts()
             this.getComments()
         })
+    }
+
+    changeComment = commentId => {
+    
+        this.setState(
+            { 
+                openModalComment: true, 
+                size:'small',
+                commentId:commentId
+            }
+        )
+    }
+
+    changeModalComment = _ => {
+        alert('changeModalComment lkaslkaslkas')
     }
 
     render() {
@@ -194,7 +213,8 @@ class DetailPost extends Component {
                     commentCount={post.commentCount} 
                     comments={comment} 
                     onDeleteComment={this.deleteComment}
-                    onVoteComment={this.voteComment}  
+                    onVoteComment={this.voteComment}
+                    onChangeComment={this.changeComment}  
                 />
                             
                 <FormPost 
@@ -212,6 +232,8 @@ class DetailPost extends Component {
                     onCloseModalComment={this.closeModalComment} 
                     postId={post.id}
                     onAddModalComment={this.addModalComent} 
+                    commentId={this.state.commentId}
+                    onChangeModalComment={this.changeModalComment}
                 />
             </div>
             

@@ -10,7 +10,7 @@ class ListComment extends Component {
     }
 
     changeComment = commentId =>{
-        alert(`changeComment - ${commentId}`)
+        this.props.onChangeComment(commentId)
     }
 
     voteCommentUp = commentId => {

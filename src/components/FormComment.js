@@ -1,21 +1,34 @@
 import React, { Component } from 'react';
 import { Modal, Form, Button } from 'semantic-ui-react'
-import { fetchPost } from '../utils/api'
+import { fetchComent } from '../utils/api'
 
 class FormComment extends Component {
 
     state = {
+        id: '',
         comment: '',
         author: '',
     }
     
     componentWillReceiveProps(nextProps) {
-    
+        if (nextProps.commentId) {
+            const commentId = nextProps.commentId;
+            fetchComent(commentId).then(dados => {
+                this.setState(
+                    { 
+                        id: dados.id,
+                        comment: dados.body,
+                        author: dados.author, 
+                    }
+                )
+            })
+        }
     }
 
     clearStateForm = _ => {
         this.setState(
             { 
+                id: '',
                 comment: '',
                 author: '', 
             }
@@ -27,6 +40,7 @@ class FormComment extends Component {
     }
 
     handleCloseModal = _ => {
+        this.clearStateForm()
         this.props.onCloseModalComment()
     }
 
@@ -35,6 +49,10 @@ class FormComment extends Component {
         const { comment, author } = this.state
         this.props.onAddModalComment({postId, comment, author})
         this.clearStateForm()
+    }
+
+    handleEditPost = _ => {
+        this.props.onChangeModalComment()
     }
 
     render() {     
@@ -63,8 +81,8 @@ class FormComment extends Component {
                     <Button negative onClick={()=> this.handleCloseModal()}>
                         Cancelar
                     </Button>
-                    <Button onClick={()=> this.state.idEdit ? this.handleEditPost() : this.handleAddComment()}>
-                        {this.state.idEdit ? "Alterar" : "Adicionar"}
+                    <Button onClick={()=> this.state.id ? this.handleEditPost() : this.handleAddComment()}>
+                        {this.state.id ? "Alterar" : "Adicionar"}
                     </Button>
                 </Modal.Actions>
             </Modal>
