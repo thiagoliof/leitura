@@ -155,3 +155,15 @@ export function voteComment (id, option) {
         })
     }).then((res) => res.json())
 }
+
+export function fetchComent (id) {
+  
+    var request = new Request(`http://localhost:3001/comments/${id}`, {
+	    headers: new Headers({
+		    'Authorization': 'whatever'
+	    })
+    });
+
+    return fetch(request)
+        .then((res) => res.json())
+}
