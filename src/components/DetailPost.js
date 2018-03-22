@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import { Button, Card, Segment, Divider, Popup } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { fetchPost, votePost, editPost, deletePost, addComments, fetchComents, deleteComment, voteComment } from '../utils/api'
+import { fetchPost, votePost, editPost, deletePost, addComments, fetchComents, deleteComment, voteComment, editComment } from '../utils/api'
 import { loadPost, loadComments } from '../actions'
 import FormPost from './FormPost'
 import ListComment from './ListComment'
@@ -135,8 +135,12 @@ class DetailPost extends Component {
         )
     }
 
-    changeModalComment = _ => {
-        alert('changeModalComment lkaslkaslkas')
+    changeModalComment = ({id, comment, author}) => {
+        editComment(id, Date.now, comment, author).then(dados => {
+            this.getPosts()
+            this.getComments()
+            this.closeModalComment()    
+        })
     }
 
     render() {

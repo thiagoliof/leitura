@@ -51,8 +51,10 @@ class FormComment extends Component {
         this.clearStateForm()
     }
 
-    handleEditPost = _ => {
-        this.props.onChangeModalComment()
+    handleEditComment = _ => {
+        const { id, comment, author } = this.state
+        this.props.onChangeModalComment({id, comment, author})
+        this.clearStateForm()
     }
 
     render() {     
@@ -81,7 +83,7 @@ class FormComment extends Component {
                     <Button negative onClick={()=> this.handleCloseModal()}>
                         Cancelar
                     </Button>
-                    <Button onClick={()=> this.state.id ? this.handleEditPost() : this.handleAddComment()}>
+                    <Button onClick={()=> this.state.id ? this.handleEditComment() : this.handleAddComment()}>
                         {this.state.id ? "Alterar" : "Adicionar"}
                     </Button>
                 </Modal.Actions>

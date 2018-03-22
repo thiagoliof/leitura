@@ -53,9 +53,6 @@ class ListComment extends Component {
                                         </Card.Content>
                                     </Card>
                                 </Card.Group>
-                                <div>
-                                   <code>{JSON.stringify(comment)}</code>
-                                </div>
                             </Segment>
                         ))
                     )}

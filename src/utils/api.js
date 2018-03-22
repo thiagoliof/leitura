@@ -167,3 +167,19 @@ export function fetchComent (id) {
     return fetch(request)
         .then((res) => res.json())
 }
+
+export function editComment (id, timestamp, body, author) {
+
+    return fetch(`http://localhost:3001/comments/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': 'whatever',
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            timestamp: timestamp,
+            body: body,
+            author: author,
+        })
+    }).then((res) => res.json())
+}
