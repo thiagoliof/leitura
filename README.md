@@ -1,6 +1,10 @@
 
 
-## Instalando o projeto
+## Instalando a aplicação
+
+```shell
+git clone git@github.com:thiagoliof/leitura.git
+```
 
 ```shell
 npm i && npm start
