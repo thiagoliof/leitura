@@ -214,7 +214,7 @@ class DetailPost extends Component {
                 </Segment>
                 
                 <ListComment 
-                    commentCount={post.commentCount} 
+                    commentCount={post.commentCount}  
                     comments={comment} 
                     onDeleteComment={this.deleteComment}
                     onVoteComment={this.voteComment}
