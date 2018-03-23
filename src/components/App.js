@@ -27,8 +27,9 @@ class App extends Component {
         <div>
           {category.length > 0 && (
             <Menu pointing secondary>
+              <Link to={"/"} className={"item"}>Home</Link>
               {category.map((cat, index) => (
-                <Link key={index} to={"/" + (index === 0 ? "" : cat.name)} className={"item"} params={cat.name} >{capitalize(cat.name)}</Link>
+                <Link key={index} to={"/" + cat.name} className={"item"} params={cat.name} >{capitalize(cat.name)}</Link>
               ))}
             </Menu>
           )}
