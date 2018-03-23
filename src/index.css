@@ -19,3 +19,8 @@
   margin-right: 0px !important;
 }
 
+.ui.huge.header {
+  min-height: 1em;
+  font-size: 7em;
+}
+
