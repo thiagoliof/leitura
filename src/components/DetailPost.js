@@ -9,6 +9,7 @@ import ListComment from './ListComment'
 import FormComment from './FormComment'
 import Component404 from './Component404'
 import uuidv1 from 'uuid/v1';
+import { capitalize } from '../utils/helpers'
 
 class DetailPost extends Component {
     
@@ -150,14 +151,9 @@ class DetailPost extends Component {
             return <Redirect to='/' />
         }
 
-        const { post, comment } = this.props
-        console.log(post)
+        const { post, comment, category } = this.props
         const { open, size, idEdit, openModalComment } = this.state
-        const categoryOptions = [
-            { value: 'react',   text: 'React'},
-            { value: 'redux',   text: 'Redux'},
-            { value: 'udacity', text: 'Udacity'},
-        ]
+        
         return (
             <div>
                 {Object.keys(post).length > 0 && !post.error && (
@@ -241,7 +237,7 @@ class DetailPost extends Component {
                 <FormPost 
                     size={size} 
                     open={open} 
-                    categoryOptions={categoryOptions}
+                    categoryOptions={category}
                     onCloseModal={this.closeModal}
                     onChangePost={this.editPost}
                     idEdit={idEdit}
@@ -261,8 +257,17 @@ class DetailPost extends Component {
         )
     }
 }
-function mapStateToProps ({ post, comment }, props) {
-    return {post:post, comment:comment}
+function mapStateToProps ({ post, comment, category }, props) {
+    
+    const _category = category.map(data => {
+        return {value:data.name, text: capitalize(data.path)}
+    })
+    
+    return {
+        post:post, 
+        comment:comment, 
+        category:_category
+    }
 }
 
 function mapDispatchToProps (dispatch) {

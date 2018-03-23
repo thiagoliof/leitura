@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Form, Button, Dropdown } from 'semantic-ui-react'
 import { fetchPost } from '../utils/api'
+import { capitalize } from '../utils/helpers'
 
 class FormCadasto extends Component {
 

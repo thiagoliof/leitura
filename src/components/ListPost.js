@@ -5,7 +5,7 @@ import { fetchPosts, votePost, deletePost, addPost, editPost } from '../utils/ap
 import { connect } from 'react-redux'
 import { loadPosts, orderPosts } from '../actions'
 import FormPost from './FormPost'
-
+import { capitalize } from '../utils/helpers'
 import uuidv1 from 'uuid/v1';
 
 
@@ -92,13 +92,8 @@ class ListPost extends Component {
     }
 
     render() {
-        const { posts } = this.props
+        const { posts, category } = this.props
         const { open, size, idEdit } = this.state
-        const categoryOptions = [
-            { value: 'react',   text: 'React'},
-            { value: 'redux',   text: 'Redux'},
-            { value: 'udacity', text: 'Udacity'},
-        ]
 
         return (
             <div>
@@ -195,7 +190,7 @@ class ListPost extends Component {
                 <FormPost 
                     size={size} 
                     open={open} 
-                    categoryOptions={categoryOptions}
+                    categoryOptions={category}
                     onCloseModal={this.closeModal}
                     onAddPost={this.addPost}
                     onChangePost={this.editPost}
@@ -207,7 +202,7 @@ class ListPost extends Component {
     }
 }
 
-function mapStateToProps ({ posts, orderPost }, props) {
+function mapStateToProps ({ posts, orderPost, category }, props) {
     var _posts = posts;
     if (props.filter){
         _posts = posts.filter(e => e.category === props.filter.params.category)
@@ -227,7 +222,12 @@ function mapStateToProps ({ posts, orderPost }, props) {
             _posts = posts.slice().sort(function(a,b) {return (a.voteScore > b.voteScore) ? 1 : ((b.voteScore > a.voteScore) ? -1 : 0);} ).reverse();
         }
     }
-    return { posts:_posts, orderPost:orderPost };
+
+    const _category = category.map(data => {
+        return {value:data.name, text: capitalize(data.path)}
+    })
+
+    return { posts:_posts, orderPost:orderPost, category:_category };
 }
   
 function mapDispatchToProps (dispatch) {
