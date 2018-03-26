@@ -202,24 +202,40 @@ class ListPost extends Component {
     }
 }
 
+const orderPostToShow = (posts, order) =>{
+    if(order === 'orderUp'){
+        posts = posts.slice().sort(function(a,b) {
+            return (a.voteScore - b.voteScore);
+        }); 
+    }
+    else if(order === 'orderDown'){
+        posts = posts.slice().sort(function(a,b) {
+            return (b.voteScore - a.voteScore);
+        })
+    }
+
+    return posts
+
+}
+
 function mapStateToProps ({ posts, orderPost, category }, props) {
     var _posts = posts;
     if (props.filter){
         _posts = posts.filter(e => e.category === props.filter.params.category)
         if (Object.keys(orderPost).length > 0) {
             if(orderPost.order === 'orderUp'){
-                _posts = _posts.slice().sort(function(a,b) {return (a.voteScore > b.voteScore) ? 1 : ((b.voteScore > a.voteScore) ? -1 : 0);} ); 
+                _posts = orderPostToShow(_posts, 'orderUp')
             }
             else if(orderPost.order === 'orderDown'){
-                _posts = _posts.slice().sort(function(a,b) {return (a.voteScore > b.voteScore) ? 1 : ((b.voteScore > a.voteScore) ? -1 : 0);} ).reverse();
+                _posts = orderPostToShow(_posts, 'orderDown')
             }
         }
     } else {
         if(orderPost.order === 'orderUp'){
-            _posts = posts.slice().sort(function(a,b) {return (a.voteScore > b.voteScore) ? 1 : ((b.voteScore > a.voteScore) ? -1 : 0);} ); 
+            _posts = orderPostToShow(_posts, 'orderUp')
         }
         else if(orderPost.order === 'orderDown'){
-            _posts = posts.slice().sort(function(a,b) {return (a.voteScore > b.voteScore) ? 1 : ((b.voteScore > a.voteScore) ? -1 : 0);} ).reverse();
+            _posts = orderPostToShow(_posts, 'orderDown')
         }
     }
 
