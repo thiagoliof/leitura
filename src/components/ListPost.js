@@ -116,7 +116,7 @@ class ListPost extends Component {
                                         <Icon name='chevron up' />
                                     </Button>
                                 }
-                                content='Ordenar do maior para o menor'
+                                content='Ordenar do mais votado para o menos votado'
                                 position='top right'
                             />
                                 <Button.Or text='ou'/>
@@ -126,7 +126,7 @@ class ListPost extends Component {
                                         <Icon name='chevron down' />
                                     </Button>
                                 }
-                                content='Ordenar do menor para o maior'
+                                content='Ordenar do menos votado para o mais votado'
                                 position='top right'
                             />
                             </Button.Group>
