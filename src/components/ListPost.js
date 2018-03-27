@@ -204,12 +204,12 @@ class ListPost extends Component {
 
 const orderPostToShow = (posts, order) =>{
     if(order === 'orderUp'){
-        posts = posts.slice().sort(function(a,b) {
+        posts = posts.slice().sort((a,b) => {
             return (a.voteScore - b.voteScore);
         }); 
     }
     else if(order === 'orderDown'){
-        posts = posts.slice().sort(function(a,b) {
+        posts = posts.slice().sort((a,b) => {
             return (b.voteScore - a.voteScore);
         })
     }
@@ -219,23 +219,22 @@ const orderPostToShow = (posts, order) =>{
 }
 
 function mapStateToProps ({ posts, orderPost, category }, props) {
-    var _posts = posts;
     if (props.filter){
-        _posts = posts.filter(e => e.category === props.filter.params.category)
+        posts = posts.filter(e => e.category === props.filter.params.category)
         if (Object.keys(orderPost).length > 0) {
             if(orderPost.order === 'orderUp'){
-                _posts = orderPostToShow(_posts, 'orderUp')
+                posts = orderPostToShow(posts, 'orderUp')
             }
             else if(orderPost.order === 'orderDown'){
-                _posts = orderPostToShow(_posts, 'orderDown')
+                posts = orderPostToShow(posts, 'orderDown')
             }
         }
     } else {
         if(orderPost.order === 'orderUp'){
-            _posts = orderPostToShow(_posts, 'orderUp')
+            posts = orderPostToShow(posts, 'orderUp')
         }
         else if(orderPost.order === 'orderDown'){
-            _posts = orderPostToShow(_posts, 'orderDown')
+            posts = orderPostToShow(posts, 'orderDown')
         }
     }
 
@@ -243,7 +242,7 @@ function mapStateToProps ({ posts, orderPost, category }, props) {
         return {value:data.name, text: capitalize(data.path)}
     })
 
-    return { posts:_posts, orderPost:orderPost, category:_category };
+    return { posts, orderPost:orderPost, category:_category };
 }
   
 function mapDispatchToProps (dispatch) {
