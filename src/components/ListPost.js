@@ -219,23 +219,11 @@ const orderPostToShow = (posts, order) =>{
 }
 
 function mapStateToProps ({ posts, orderPost, category }, props) {
+    
+    posts = orderPostToShow(posts, orderPost.order)
+
     if (props.filter){
         posts = posts.filter(e => e.category === props.filter.params.category)
-        if (Object.keys(orderPost).length > 0) {
-            if(orderPost.order === 'orderUp'){
-                posts = orderPostToShow(posts, 'orderUp')
-            }
-            else if(orderPost.order === 'orderDown'){
-                posts = orderPostToShow(posts, 'orderDown')
-            }
-        }
-    } else {
-        if(orderPost.order === 'orderUp'){
-            posts = orderPostToShow(posts, 'orderUp')
-        }
-        else if(orderPost.order === 'orderDown'){
-            posts = orderPostToShow(posts, 'orderDown')
-        }
     }
 
     const _category = category.map(data => {
