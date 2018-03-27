@@ -44,7 +44,7 @@ function post (state = {}, action){
     }
 }
 
-function orderPost (state = {}, action){
+function orderPost (state = { order: 'orderDown' }, action){
     
     switch (action.type) {
         
